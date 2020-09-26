@@ -1,113 +1,141 @@
-<mxfile host="app.diagrams.net" modified="2020-09-23T07:18:48.892Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="uWXth00vFL2iSBZbG2kY" version="13.7.3" type="github">
+<mxfile host="app.diagrams.net" modified="2020-09-26T13:54:20.917Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36" etag="NuMISOAYWlb1cNFFEyK7" version="13.7.5" type="github">
   <diagram id="y8fQAS1Pd3163THCr6ce" name="Page-1">
     <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="IL-hVEgLl5qu0awRyLGG-1" target="IL-hVEgLl5qu0awRyLGG-2">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" parent="1" source="IL-hVEgLl5qu0awRyLGG-1" target="IL-hVEgLl5qu0awRyLGG-2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-18" value="Klik Registerasi" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IL-hVEgLl5qu0awRyLGG-7">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-18" value="Klik Registerasi" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="IL-hVEgLl5qu0awRyLGG-7" vertex="1" connectable="0">
           <mxGeometry x="-0.2353" y="-2" relative="1" as="geometry">
             <mxPoint y="25" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="IL-hVEgLl5qu0awRyLGG-1" target="IL-hVEgLl5qu0awRyLGG-3">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="IL-hVEgLl5qu0awRyLGG-1" target="IL-hVEgLl5qu0awRyLGG-3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="460" y="265" />
-              <mxPoint x="460" y="385" />
+              <mxPoint x="390" y="265" />
+              <mxPoint x="390" y="385" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-15" value="Klik Login" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IL-hVEgLl5qu0awRyLGG-9">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-15" value="Klik Login" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="IL-hVEgLl5qu0awRyLGG-9" vertex="1" connectable="0">
           <mxGeometry x="-0.4783" y="-30" relative="1" as="geometry">
             <mxPoint x="35" y="30" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-1" value="Login Page" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="250" width="120" height="60" as="geometry" />
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-1" value="Login Page" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="210" y="250" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="IL-hVEgLl5qu0awRyLGG-2" target="IL-hVEgLl5qu0awRyLGG-23">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="IL-hVEgLl5qu0awRyLGG-2" target="IL-hVEgLl5qu0awRyLGG-23" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="450" y="510" />
-              <mxPoint x="450" y="510" />
+              <mxPoint x="380" y="510" />
+              <mxPoint x="380" y="510" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-28" value="Klik Register Voice" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IL-hVEgLl5qu0awRyLGG-24">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-28" value="Klik Register Voice" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="IL-hVEgLl5qu0awRyLGG-24" vertex="1" connectable="0">
           <mxGeometry x="-0.0909" y="11" relative="1" as="geometry">
             <mxPoint x="-11" y="10" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="IL-hVEgLl5qu0awRyLGG-2" target="IL-hVEgLl5qu0awRyLGG-1">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" parent="1" source="IL-hVEgLl5qu0awRyLGG-2" target="IL-hVEgLl5qu0awRyLGG-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-26" value="Klik Cancel" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IL-hVEgLl5qu0awRyLGG-25">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-26" value="Klik Cancel" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="IL-hVEgLl5qu0awRyLGG-25" vertex="1" connectable="0">
           <mxGeometry x="0.3059" y="3" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-2" value="Registeration Page" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="480" width="120" height="60" as="geometry" />
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-2" value="Registeration Page" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="210" y="480" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="IL-hVEgLl5qu0awRyLGG-3" target="IL-hVEgLl5qu0awRyLGG-4">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-22" value="Klik Login" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IL-hVEgLl5qu0awRyLGG-12">
-          <mxGeometry x="-0.3467" y="2" relative="1" as="geometry">
-            <mxPoint as="offset" />
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="IL-hVEgLl5qu0awRyLGG-3" target="JDqSiTHiBpvro2TMhpf5-7" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="400" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="IL-hVEgLl5qu0awRyLGG-3" target="IL-hVEgLl5qu0awRyLGG-1">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-22" value="Klik Login" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="IL-hVEgLl5qu0awRyLGG-12" vertex="1" connectable="0">
+          <mxGeometry x="-0.3467" y="2" relative="1" as="geometry">
+            <mxPoint x="9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="IL-hVEgLl5qu0awRyLGG-3" target="IL-hVEgLl5qu0awRyLGG-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="430" y="415" />
-              <mxPoint x="430" y="295" />
+              <mxPoint x="360" y="415" />
+              <mxPoint x="360" y="295" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-16" value="Klik Cancel" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IL-hVEgLl5qu0awRyLGG-14">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-16" value="Klik Cancel" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="IL-hVEgLl5qu0awRyLGG-14" vertex="1" connectable="0">
           <mxGeometry x="0.087" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-3" value="Voice Input Page" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="510" y="370" width="120" height="60" as="geometry" />
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-3" value="Voice Input Page" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="440" y="370" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="IL-hVEgLl5qu0awRyLGG-4" target="IL-hVEgLl5qu0awRyLGG-1">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="IL-hVEgLl5qu0awRyLGG-4" target="IL-hVEgLl5qu0awRyLGG-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="840" y="230" />
-              <mxPoint x="370" y="230" />
+              <mxPoint x="1010" y="230" />
+              <mxPoint x="300" y="230" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-17" value="Klik Logout" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IL-hVEgLl5qu0awRyLGG-13">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-17" value="Klik Logout" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="IL-hVEgLl5qu0awRyLGG-13" vertex="1" connectable="0">
           <mxGeometry x="-0.0571" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-4" value="Successfully Login" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="780" y="370" width="120" height="60" as="geometry" />
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-4" value="Login Result" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="950" y="370" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="IL-hVEgLl5qu0awRyLGG-23" target="IL-hVEgLl5qu0awRyLGG-1">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="IL-hVEgLl5qu0awRyLGG-23" target="JDqSiTHiBpvro2TMhpf5-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="620" y="600" />
-              <mxPoint x="260" y="600" />
-              <mxPoint x="260" y="280" />
+              <mxPoint x="550" y="610" />
             </Array>
+            <mxPoint x="530" y="650" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-30" value="Klik register" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IL-hVEgLl5qu0awRyLGG-29">
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-30" value="Klik register" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="IL-hVEgLl5qu0awRyLGG-29" vertex="1" connectable="0">
           <mxGeometry x="-0.5079" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IL-hVEgLl5qu0awRyLGG-23" value="Registerasi Voice input" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="560" y="480" width="120" height="60" as="geometry" />
+        <mxCell id="IL-hVEgLl5qu0awRyLGG-23" value="Registerasi Voice input" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="490" y="480" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JDqSiTHiBpvro2TMhpf5-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="JDqSiTHiBpvro2TMhpf5-1" target="IL-hVEgLl5qu0awRyLGG-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="110" y="610" />
+              <mxPoint x="110" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JDqSiTHiBpvro2TMhpf5-5" value="Otomatis Kembali ke halaman Login" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JDqSiTHiBpvro2TMhpf5-2">
+          <mxGeometry x="-0.68" y="3" relative="1" as="geometry">
+            <mxPoint y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JDqSiTHiBpvro2TMhpf5-1" value="Mengirim data ke API" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="580" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JDqSiTHiBpvro2TMhpf5-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="JDqSiTHiBpvro2TMhpf5-7" target="IL-hVEgLl5qu0awRyLGG-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JDqSiTHiBpvro2TMhpf5-9" value="Otomatis ke halaman success" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JDqSiTHiBpvro2TMhpf5-8">
+          <mxGeometry x="-0.2286" y="2" relative="1" as="geometry">
+            <mxPoint x="14" y="2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JDqSiTHiBpvro2TMhpf5-7" value="Mengirim data ke API" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="370" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
