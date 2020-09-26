@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-09-26T14:16:25.009Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36" etag="lQ-wnOYepuP8whXMYYtD" version="13.7.5" type="github">
+<mxfile host="app.diagrams.net" modified="2020-09-26T14:18:56.282Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36" etag="CTknRj4kUU74r4wQYp8M" version="13.7.5" type="github">
   <diagram id="UnPoUyeYoCzFYDjncoaV" name="Page-1">
     <mxGraphModel dx="1422" dy="745" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -12,7 +12,7 @@
             <mxPoint x="39" y="-1" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="s3C_2HI8IGK5vRpWpg6L-1" value="Data diterima" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="s3C_2HI8IGK5vRpWpg6L-1" value="Komunikasi API" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="270" y="270" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="s3C_2HI8IGK5vRpWpg6L-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="s3C_2HI8IGK5vRpWpg6L-2" target="s3C_2HI8IGK5vRpWpg6L-5">
@@ -38,6 +38,14 @@
         </mxCell>
         <mxCell id="s3C_2HI8IGK5vRpWpg6L-5" value="Program memroses data" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="650" y="430" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s3C_2HI8IGK5vRpWpg6L-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="s3C_2HI8IGK5vRpWpg6L-9" target="s3C_2HI8IGK5vRpWpg6L-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s3C_2HI8IGK5vRpWpg6L-13" value="otomatis mengirim hasil proses data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="s3C_2HI8IGK5vRpWpg6L-12">
+          <mxGeometry x="0.24" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="s3C_2HI8IGK5vRpWpg6L-9" value="Mengirim kembali hasil proses data" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="270" y="430" width="120" height="60" as="geometry" />
