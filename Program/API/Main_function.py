@@ -1,4 +1,6 @@
+from types import MethodType
 import numpy as np
+import json
 import glob
 import os
 import sys
@@ -14,11 +16,6 @@ warnings.filterwarnings("ignore")
 
 from sklearn import preprocessing
 from python_speech_features import mfcc
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route('/')
 
 #Calculate and returns the delta of given feature vector matrix
 def calculate_delta(array):
@@ -52,8 +49,15 @@ def extract_features(audio,rate):
     combined = np.hstack((mfcc_feat,delta)) 
     return combined
 
-def adduser():
-  
+
+
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/add_user', methods=['POST'])
+def add():
+    name = request.args.get('user_id')
     source = "./voice_database/" + name #change to user ID
   
     os.mkdir(source)
@@ -90,6 +94,7 @@ def adduser():
             count = 0
         count = count + 1
 
+@app.route('/Verfication')
 def recognize():
    # Voice Authentication
    FILENAME = "./test.wav"
@@ -128,6 +133,3 @@ def recognize():
            return
    
    print( "Recognized as - ", identity)
-
-if(__name__ == '__main__'):
-    app.run(debug=True)
