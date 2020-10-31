@@ -96,40 +96,40 @@ def add():
 
 @app.route('/Verfication')
 def recognize():
-   # Voice Authentication
-   FILENAME = "./test.wav"
+    # Voice Authentication
+    FILENAME = "./test.wav"
 
-   audio = pyaudio.PyAudio()
+    audio = pyaudio.PyAudio()
 
-   modelpath = "./gmm_models/"
+    modelpath = "./gmm_models/"
 
-   gmm_files = [os.path.join(modelpath,fname) for fname in 
-               os.listdir(modelpath) if fname.endswith('.gmm')]
+    gmm_files = [os.path.join(modelpath,fname) for fname in 
+    os.listdir(modelpath) if fname.endswith('.gmm')]
 
-   models    = [pickle.load(open(fname,'rb')) for fname in gmm_files]
+    models = [pickle.load(open(fname,'rb')) for fname in gmm_files]
 
-   speakers   = [fname.split("/")[-1].split(".gmm")[0] for fname 
-               in gmm_files]
+    speakers = [fname.split("/")[-1].split(".gmm")[0] for fname 
+    in gmm_files]
  
-   #read test file
-   sr,audio = read(FILENAME)
+    #read test file
+    sr,audio = read(FILENAME)
    
-   # extract mfcc features
-   vector = extract_features(audio,sr)
-   log_likelihood = np.zeros(len(models)) 
+    # extract mfcc features
+    vector = extract_features(audio,sr)
+    log_likelihood = np.zeros(len(models)) 
 
-   #checking with each model one by one
-   for i in range(len(models)):
+    #checking with each model one by one
+    for i in range(len(models)):
        gmm = models[i]         
        scores = np.array(gmm.score(vector))
        log_likelihood[i] = scores.sum()
 
-   pred = np.argmax(log_likelihood)
-   identity = speakers[pred]
+    pred = np.argmax(log_likelihood)
+    identity = speakers[pred]
   
-   # if voice not recognized than terminate the process
-   if identity == 'unknown':
-           print("Not Recognized! Try again...")
-           return
+    # if voice not recognized than terminate the process
+    if identity == 'unknown':
+        print("Not Recognized! Try again...")
+        return
    
-   print( "Recognized as - ", identity)
+    print( "Recognized as - ", identity)
