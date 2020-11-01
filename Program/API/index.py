@@ -1,4 +1,3 @@
-from inspect import EndOfBlock
 from flask import Flask
 from flask_restful import Api, Resource, marshal_with, reqparse, fields
 from flask_sqlalchemy import SQLAlchemy
@@ -11,10 +10,10 @@ db = SQLAlchemy(app)
 class UsersModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.String(100), nullable=False)
-    voice_loc = db.Column(db.String(max), nullable=False)
+    voice_loc = db.Column(db.String(300), nullable=False)
     def __repr__(self):
         return f"Users(user_id = {user_id}, voice_loc = {voice_loc})"
-        
+
 db.create_all()
 
 user_put_args = reqparse.RequestParser()
@@ -33,7 +32,8 @@ class Users(Resource):
         response = UsersModel.query.get(id=userid)
         return response
 
-    def post(self, userid):
+    @marshal_with(resource_fields)
+    def put(self, userid):
         args = user_put_args.parse_args()
         user = UsersModel(id=userid, user_id=args['user_id'], voice_loc=args['voice_loc'])
         db.session.add(user)
