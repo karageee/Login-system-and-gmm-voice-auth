@@ -1,15 +1,15 @@
 import requests
+from requests.api import request
+import json
 
 BASE = "http://127.0.0.1:5000/"
 
-data = [{"user_id": "FF1", "voice_loc": "D:/locationA"},
-        {"user_id": "FF2", "voice_loc": "D:/locationB"},
-        {"user_id": "FF3", "voice_loc": "D:/locationC"}]
+data = '{"user_id": "FF1", "voice_loc": "D:/locationA"}'
 
-for i in range (len(data)):
-    response = requests.put(BASE + "user/" + str(i), data[i])
-    print(response.json())
+y = json.loads(data)
+print(y)
 
-input()
-response = requests.get(BASE + "user/2")
+response = requests.put(BASE + "user/" + y['user_id'])
+
+response = requests.get(BASE + "user/FF2")
 print(response.json())
