@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_restful import Api, Resource, abort, marshal_with, reqparse, fields
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask("__name__")
 api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user/database.db'
 db = SQLAlchemy(app)
+parent_dir = "./backend/voice_database"
 
 class UsersModel(db.Model):
     auth_id = db.Column(db.Integer, primary_key=True)
@@ -39,12 +41,13 @@ class Users(Resource):
         if response:
             abort(409, message="User id taken...")
 
+        path = os.path.join(parent_dir, args['user_id'])
+        os.mkdir(path)
         i = UsersModel.query.count()
-        user = UsersModel(auth_id=i, user_id=args['user_id'], voice_loc=args['voice_loc'])
+        user = UsersModel(auth_id=i, user_id=args['user_id'], voice_loc=path)
         db.session.add(user)
         db.session.commit()
         return user, 201
-
 
 api.add_resource(Users, "/user/")
 
