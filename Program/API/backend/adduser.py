@@ -1,10 +1,8 @@
-import pyaudio
-import wave
 import os
 import pickle
-import time
 from scipy.io.wavfile import read
 from sklearn.mixture import GaussianMixture 
+from sklearn import preprocessing
 import numpy as np
 import python_speech_features as mfcc
 
@@ -54,7 +52,7 @@ def add_user(user_id):
     for path in os.listdir(source):
         path = os.path.join(source, path)
 
-        features = np.array([])
+        features = np.asfarray(())
         
         # reading audio files of speaker
         (sr, audio) = read(path)
@@ -76,6 +74,6 @@ def add_user(user_id):
             pickle.dump(gmm, open(dest + name + '.gmm', 'wb'))
             print(name + ' added successfully') 
             
-            features = np.asarray(())
+            features = np.asfarray(())
             count = 0
         count = count + 1
