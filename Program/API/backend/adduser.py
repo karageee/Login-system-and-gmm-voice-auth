@@ -41,12 +41,10 @@ def extract_features(audio,rate):
 def add_user(user_id):
     
     name = user_id
-      
-    os.system('cls' if os.name == 'nt' else 'clear') 
     
-    source = "./voice_database/" + name
+    source = "./backend/voice_database/" + name
 
-    dest =  "./gmm_models/"
+    dest =  "./backend/gmm_models/"
     count = 1
 
     for path in os.listdir(source):
@@ -67,7 +65,7 @@ def add_user(user_id):
             
         # when features of 3 files of speaker are concatenated, then do model training
         if count == 3:    
-            gmm = GaussianMixture(n_components = 16, n_iter = 200, covariance_type='diag',n_init = 3)
+            gmm = GaussianMixture(n_components = 16, max_iter = 200, covariance_type='diag',n_init = 3)
             gmm.fit(features)
 
             # saving the trained gaussian model
@@ -77,3 +75,5 @@ def add_user(user_id):
             features = np.asfarray(())
             count = 0
         count = count + 1
+
+#The model will be created for every 3 voices in the folder.

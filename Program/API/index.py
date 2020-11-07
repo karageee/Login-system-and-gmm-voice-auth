@@ -59,14 +59,11 @@ class Voice(Resource):
             return 'no voice found'  
         file = request.files['voice']
         if file.filename == '':
-            resp = jsonify({'message' : 'No file selected for uploading'})
-            resp.status_code = 400
-            return resp    
+            abort (400, message="No file selected for uploading")
         
         file.save(os.path.join(path, file.filename))
-
-        resp = jsonify({"message" : "File successfully uploaded"})
-        return resp, 201
+        adduser.add_user(user_id)
+        return jsonify(message= "file successfully added", category= "success", status=200)
 
 api.add_resource(Users, "/user/")
 api.add_resource(Voice, "/voice/<string:user_id>")
