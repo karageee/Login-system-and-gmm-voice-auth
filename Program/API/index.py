@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_restful import Api, Resource, abort, marshal_with, reqparse, fields
 from flask_sqlalchemy import SQLAlchemy
-from backend import adduser
+from backend import voices
 import os
 
 app = Flask("__name__")
@@ -52,7 +52,7 @@ class Users(Resource):
 
         return user, 201
 
-class Voice(Resource):
+class Voice_add(Resource):
     def post(self, user_id):
         path = os.path.join(parent_dir, user_id)
         if 'voice' not in request.files:
@@ -62,11 +62,24 @@ class Voice(Resource):
             abort (400, message="No file selected for uploading")
         
         file.save(os.path.join(path, file.filename))
-        adduser.add_user(user_id)
+        voices.add_user(user_id)
+        return jsonify(message= "file successfully added", category= "success", status=200)
+
+class Voice_recog(Resource):
+    def post(self, user_id):
+        path = os.path.join(parent_dir, user_id)
+        if 'voice' not in request.files:
+            return 'no voice found'  
+        file = request.files['voice']
+        if file.filename == '':
+            abort (400, message="No file selected for uploading")
+        file.save(os.path.join(path, file.filename))
+        voices.recognize(user_id, (os.path.join(path, file.filename)))
         return jsonify(message= "file successfully added", category= "success", status=200)
 
 api.add_resource(Users, "/user/")
-api.add_resource(Voice, "/voice/<string:user_id>")
+api.add_resource(Voice_add, "/voice_add/<string:user_id>")
+api.add_resource(Voice_recog, "/voice_recog/<string:user_id>")
 
 if __name__ == "__main__":
     app.run(debug=True)
