@@ -18,7 +18,7 @@ db.create_all()
 
 @app.route("/")
 def login():
-    return render_template("index.html")
+    return render_template("login.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
