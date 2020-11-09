@@ -1,4 +1,3 @@
-from API.index import UsersModel
 from flask import Flask, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 
