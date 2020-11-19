@@ -26,10 +26,10 @@ class User:
     user['password'] = pbkdf2_sha256.encrypt(user['password'])
 
     # Check for existing email address
-    if db.users.find_one({ "email": user['email'] }):
+    if db.Users.find_one({ "email": user['email'] }):
       return jsonify({ "error": "Email address already in use" }), 400
 
-    if db.users.insert_one(user):
+    if db.Users.insert_one(user):
       return self.start_session(user)
 
     return jsonify({ "error": "Signup failed" }), 400
@@ -40,7 +40,7 @@ class User:
   
   def login(self):
 
-    user = db.users.find_one({
+    user = db.Users.find_one({
       "email": request.form.get('email')
     })
 
