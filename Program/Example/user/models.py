@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, session, redirect
-from passlib.hash import pbkdf2_sha256
+from passlib.hash import md5_crypt
 from app import db
 import uuid
 
@@ -23,7 +23,7 @@ class User:
     }
 
     # Encrypt the password
-    user['password'] = pbkdf2_sha256.encrypt(user['password'])
+    user['password'] = md5_crypt.encrypt(user['password'])
 
     # Check for existing email address
     if db.Users.find_one({ "email": user['email'] }):
@@ -44,7 +44,7 @@ class User:
       "email": request.form.get('email')
     })
 
-    if user and pbkdf2_sha256.verify(request.form.get('password'), user['password']):
+    if user and md5_crypt.verify(request.form.get('password'), user['password']):
       return self.start_session(user)
     
     return jsonify({ "error": "Invalid login credentials" }), 401
