@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask
 from app import app
 from user.models import User
 
@@ -13,14 +13,3 @@ def signout():
 @app.route('/user/login', methods=['POST'])
 def login():
   return User().login()
-
-@app.route('/test', methods=['POST','GET'])
-def voice():
-  if request.method == "POST":
-    f = request.files['audio_data']
-    with open('audio.wav', 'wb') as audio:
-      f.save(audio) 
-    print('file uploaded successfully')
-    return render_template('voice_signup.html', request="POST")
-  else:
-    return render_template("voice_signup.html")

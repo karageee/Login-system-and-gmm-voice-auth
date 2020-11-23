@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, redirect
+from flask import Flask, render_template, session, redirect, request
 from functools import wraps
 import pymongo
 
@@ -31,3 +31,14 @@ def home():
 @login_required
 def dashboard():
   return render_template('dashboard.html')
+
+@app.route('/user/voice_signup', methods=['POST','GET'])
+def voice():
+  if request.method == "POST":
+    f = request.files['audio_data']
+    with open('audio.wav', 'wb') as audio:
+      f.save(audio) 
+    print('file uploaded successfully')
+    return render_template('voice_signup.html', request="POST")
+  else:
+    return render_template("voice_signup.html")

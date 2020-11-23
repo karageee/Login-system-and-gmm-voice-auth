@@ -30,7 +30,7 @@ class User:
       return jsonify({ "error": "Email address already in use" }), 400
 
     if db.Users.insert_one(user):
-      return self.start_session(user)
+      return
 
     return jsonify({ "error": "Signup failed" }), 400
   
