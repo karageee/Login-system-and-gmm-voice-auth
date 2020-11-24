@@ -1,4 +1,3 @@
-import pyaudio
 import os
 import pickle
 from scipy.io.wavfile import read
@@ -80,9 +79,9 @@ def add_user(user_id):
 #The model will be created for every 3 voices in the folder.
 
 def recognize(user_id, voice):
-    audio = pyaudio.PyAudio()
+    audio = voice
 
-    modelpath = "./gmm_models/"
+    modelpath = "./app/gmm_models/"
 
     gmm_files = [os.path.join(modelpath,fname) for fname in os.listdir(modelpath) if fname.endswith('.gmm')]
 
@@ -109,7 +108,6 @@ def recognize(user_id, voice):
   
     # if voice not recognized than terminate the process
     if identity == 'unknown':
-            print("Not Recognized! Try again...")
-            return
+            return print("Not Recognized! Try again...")
    
-    print( "Recognized as - ", identity)
+    return ("Recognized as - " + identity)

@@ -8,7 +8,7 @@ app = Flask("__name__")
 api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user/database.db'
 db = SQLAlchemy(app)
-parent_dir = "./backend/voice_database"
+parent_dir = "./app/voice_database"
 
 class UsersModel(db.Model):
     auth_id = db.Column(db.Integer, primary_key=True)
@@ -73,12 +73,11 @@ class Voice_recog(Resource):
         if file.filename == '':
             abort (400, message="No file selected for uploading")
         file.save(os.path.join(path, file.filename))
-        voices.recognize(user_id, (os.path.join(path, file.filename)))
-        return jsonify(message= "file successfully added", category= "success", status=200)
+        return jsonify(message= (voices.recognize(user_id, (os.path.join(path, file.filename)))), category="success", status=200)
 
 api.add_resource(Users, "/user/")
 api.add_resource(Voice_add, "/voice_add/<string:user_id>")
 api.add_resource(Voice_recog, "/voice_recog/<string:user_id>")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='192.168.100.22', port=5000, debug=True)
