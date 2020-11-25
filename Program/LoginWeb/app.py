@@ -33,6 +33,8 @@ def dashboard():
   return render_template('dashboard.html')
 
 @app.route('/voice_signup/')
-@login_required
 def voice():
   return render_template('voice_signup.html')
+
+if __name__ == '__main__':
+  app.run(host='192.168.100.22' ,port=5000, debug=True)

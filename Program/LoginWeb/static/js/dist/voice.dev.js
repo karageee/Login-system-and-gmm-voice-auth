@@ -145,7 +145,7 @@ function createDownloadLink(blob) {
 
     var fd = new FormData();
     fd.append("voice", blob, filename);
-    xhr.open("POST", "/user/voice_signup", true);
+    xhr.open(method = "POST", url = "/user/voice_signup");
     xhr.send(fd);
   });
   li.appendChild(document.createTextNode(" ")); //add a space in between

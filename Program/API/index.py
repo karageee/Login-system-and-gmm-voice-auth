@@ -80,4 +80,4 @@ api.add_resource(Voice_add, "/voice_add/<string:user_id>")
 api.add_resource(Voice_recog, "/voice_recog/<string:user_id>")
 
 if __name__ == "__main__":
-    app.run(host='192.168.100.22', port=5000, debug=True)
+    app.run(host='192.168.100.22', port=5001, debug=True)

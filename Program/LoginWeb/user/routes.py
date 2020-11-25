@@ -14,6 +14,6 @@ def signout():
 def login():
   return User().login()
 
-@app.route('/user/voice-signup', methods=['POST'])
+@app.route('/user/voice_signup', methods=['POST'])
 def voice_signup():
   return User().voice_signup()

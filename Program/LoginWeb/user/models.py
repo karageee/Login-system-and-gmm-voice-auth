@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request, session, redirect
 from passlib.hash import md5_crypt
+from requests import sessions
 from app import db
 import uuid
-
-base = "http://192.168.100.22:5000/"
-
+import requests
 class User:
+  base = "http://192.168.100.22:5001/"
 
   def start_session(self, user):
     del user['password']
@@ -52,10 +52,8 @@ class User:
     return jsonify({ "error": "Invalid login credentials" }), 401
 
   def voice_signup(self):
-    if(session != null):
-      user = db.Users.find_one({
-        "email": session['user']
-      })
-      response = request.post(base + "voice_add/" + user, request.form.get('voice'))
-      return response
+    if(session != None):
+      user = 'FF1'
+      response = requests.post(self.base + "voice_add/" + str(user), data = request.form.get('voice'))
+      return response.json()
 
