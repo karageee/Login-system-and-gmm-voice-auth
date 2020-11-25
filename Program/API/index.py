@@ -17,6 +17,7 @@ class UsersModel(db.Model):
     def __repr__(self):
         return f"Users(user_id = {user_id}, voice_loc = {voice_loc})"
 
+db.create_all()
 
 user_post_args = reqparse.RequestParser()
 user_post_args.add_argument("user_id", type=str, help="User's UserID is required", required=True)

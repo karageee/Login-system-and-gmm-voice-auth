@@ -135,18 +135,23 @@ function createDownloadLink(blob) {
   upload.type = "submit";
   upload.innerHTML = "Upload";
   upload.addEventListener("click", function (event) {
-    var xhr = new XMLHttpRequest();
-
-    xhr.onload = function (e) {
-      if (this.readyState === 4) {
-        console.log("Server returned: ", e.target.responseText);
-      }
-    };
-
     var fd = new FormData();
     fd.append("voice", blob, filename);
-    xhr.open(method = "POST", url = "/user/voice_signup");
-    xhr.send(fd);
+    $.ajax({
+      url: "/user/voice_signup",
+      type: "POST",
+      data: fd,
+      cache: false,
+      processData: false,
+      contentType: false,
+      success: function success(resp) {
+        console.log(resp.responseJSON.success);
+      },
+      error: function error(resp) {
+        $error.text(resp.responseJSON.error).removeClass("error--hidden");
+      }
+    });
+    e.preventDefault();
   });
   li.appendChild(document.createTextNode(" ")); //add a space in between
 

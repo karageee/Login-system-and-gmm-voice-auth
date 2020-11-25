@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, session, redirect
 from passlib.hash import md5_crypt
 from requests import sessions
-from app import db
+from app import db, app
 import uuid
 import requests
 class User:
@@ -32,7 +32,12 @@ class User:
       return jsonify({ "error": "Email address already in use" }), 400
 
     if db.Users.insert_one(user):
-      return self.start_session(user)
+      self.start_session(user)
+      user_id={
+        "user_id": user['_id']
+      }
+      response = requests.post(self.base + "user/", data = user_id)
+      return response
 
     return jsonify({ "error": "Signup failed" }), 400
   
@@ -53,7 +58,8 @@ class User:
 
   def voice_signup(self):
     if(session != None):
-      user = 'FF1'
-      response = requests.post(self.base + "voice_add/" + str(user), data = request.form.get('voice'))
+      user = 'ad551946a8c4464694f831f4d13e2b3d'
+      app.logger.debug(request.files['voice'].filename) 
+      response = requests.post(self.base + "voice_add/" + user, data = request.form)
       return response.json()
 
