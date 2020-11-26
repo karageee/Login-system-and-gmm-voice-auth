@@ -149,7 +149,7 @@ function createDownloadLink(blob) {
     upload.innerHTML = "Upload";
     upload.addEventListener("click", function(event){
         var fd=new FormData();
-        fd.append("voice",blob, filename);
+        fd.append("voice",blob, (filename + ".wav"));
       
         $.ajax({
             url: "/user/voice_signup",
