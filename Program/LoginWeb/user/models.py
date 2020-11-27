@@ -5,7 +5,7 @@ import uuid
 import requests
 import os
 class User:
-  base = "http://192.168.100.22:5001/"
+  base = "http://127.0.0.1:5001/"
 
   def start_session(self, user):
     del user['password']
@@ -60,8 +60,13 @@ class User:
     user = 'ad551946a8c4464694f831f4d13e2b3d'
     print (request.files['voice'])
     f = request.files['voice']
-    f.save(os.path.join("D:/Tugas/Skripshits/Program/LoginWeb/user/Temp", f.filename))
-    data = {'voice': open("D:/Tugas/Skripshits/Program/LoginWeb/user/Temp/"+f.filename, 'rb')}
-    response = requests.post(self.base + "voice_add/" + user, data = data)
+    f.save(os.path.join("./user/Temp", f.filename))
+    a = open("./user/Temp/"+f.filename, 'rb')
+    dataObj={}
+    dataObj['user_id']=user
+    filesObj = [('voice', ('enrollment.wav', a, 'audio/wav'))]
+    print (filesObj)
+    response = requests.post(self.base + "voice_add/" + user, data = dataObj, files = filesObj)
+    print (filesObj)
     return response.json()
 

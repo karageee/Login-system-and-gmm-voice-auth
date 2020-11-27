@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify
+from flask_cors.decorator import cross_origin
 from flask_restful import Api, Resource, abort, marshal_with, reqparse, fields
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from app import voices
 import os
 
 app = Flask("__name__")
+CORS(app)
 api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user/database.db'
 db = SQLAlchemy(app)
@@ -82,4 +85,4 @@ api.add_resource(Voice_add, "/voice_add/<string:user_id>")
 api.add_resource(Voice_recog, "/voice_recog/<string:user_id>")
 
 if __name__ == "__main__":
-    app.run(host='192.168.100.22', port=5001, debug=True)
+    app.run(port=5001, debug=True)

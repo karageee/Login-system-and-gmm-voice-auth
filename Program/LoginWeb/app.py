@@ -1,8 +1,11 @@
-from flask import Flask, render_template, session, redirect, request
+from flask import Flask, render_template, session, redirect
 from functools import wraps
+from flask_cors import CORS
+from flask_cors.decorator import cross_origin
 import pymongo
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5'
 
 # Database
@@ -37,4 +40,4 @@ def voice():
   return render_template('voice_signup.html')
 
 if __name__ == '__main__':
-  app.run(host='192.168.100.22' ,port=5000, debug=True)
+  app.run(port=5000, debug=True)
