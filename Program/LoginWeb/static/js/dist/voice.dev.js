@@ -19,6 +19,7 @@ var pauseButton = document.getElementById("pauseButton"); //add events to those 
 recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
 pauseButton.addEventListener("click", pauseRecording);
+var filename = 0;
 
 function startRecording() {
   console.log("recordButton clicked");
@@ -115,7 +116,7 @@ function createDownloadLink(blob) {
   var li = document.createElement('li');
   var link = document.createElement('a'); //name of .wav file to use during upload and download (without extendion)
 
-  var filename = new Date().toISOString(); //add controls to the <audio> element
+  filename = filename + 1; //add controls to the <audio> element
 
   au.controls = true;
   au.src = url; //save to disk link

@@ -1,8 +1,9 @@
-from flask import Flask, jsonify, request, session, redirect
+from flask import Flask, jsonify, request, session, redirect, send_from_directory
 from passlib.hash import md5_crypt
-from app import db, app
+from app import db
 import uuid
 import requests
+import os
 class User:
   base = "http://192.168.100.22:5001/"
 
@@ -58,9 +59,9 @@ class User:
   def voice_signup(self):
     user = 'ad551946a8c4464694f831f4d13e2b3d'
     print (request.files['voice'])
-    data = {
-      "data":request.files['voice']
-    }
+    f = request.files['voice']
+    f.save(os.path.join("D:/Tugas/Skripshits/Program/LoginWeb/user/Temp", f.filename))
+    data = {'voice': open("D:/Tugas/Skripshits/Program/LoginWeb/user/Temp/"+f.filename, 'rb')}
     response = requests.post(self.base + "voice_add/" + user, data = data)
     return response.json()
 

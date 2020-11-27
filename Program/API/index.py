@@ -68,6 +68,7 @@ class Voice_add(Resource):
 class Voice_recog(Resource):
     def post(self, user_id):
         path = os.path.join(parent_dir, user_id)
+        print(request.form.getlist)
         if 'voice' not in request.files:
             return 'no voice found'  
         file = request.files['voice']
