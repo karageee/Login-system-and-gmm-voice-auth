@@ -143,33 +143,22 @@ function createDownloadLink(blob) {
     //add the save to disk link to li
     li.appendChild(link);
 
-    //upload link
-    var upload = document.createElement('input');
-    upload.type="submit";
-    upload.innerHTML = "Upload";
-    upload.addEventListener("click", function(event){
-        var fd=new FormData();
-        fd.append("voice",blob, (filename + ".wav"));
-      
+    //upload
+    $('form[name=voice_signup').submit(function(e){
+        var data = new FormData;
+        data.append("voice", blob, filename + ".wav")
         $.ajax({
-            url: "/user/voice_signup",
-            type: "POST",
-            data: fd,
-            cache: false,
+            url: '/user/voice_signup',
+            type: 'POST',
+            data: data,
             processData: false,
-            contentType: false,
-            success: function(resp) {
-                console.log(resp.responseJSON.success);
-            },
-            error: function(resp) {
-                $error.text(resp.responseJSON.error).removeClass("error--hidden");
-            }
+            contentType: false
         });
-      
-        e.preventDefault();
-    });
+      e.preventDefault();
+      });
+
     li.appendChild(document.createTextNode (" "))//add a space in between
-    li.appendChild(upload)//add the upload link to li
+    // li.appendChild(upload)//add the upload link to li
 
     //add the li element to the ol
     recordingsList.appendChild(li);

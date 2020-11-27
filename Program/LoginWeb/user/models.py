@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request, session, redirect
 from passlib.hash import md5_crypt
-from requests import sessions
 from app import db, app
 import uuid
 import requests
@@ -57,9 +56,11 @@ class User:
     return jsonify({ "error": "Invalid login credentials" }), 401
 
   def voice_signup(self):
-    if(session != None):
-      user = 'ad551946a8c4464694f831f4d13e2b3d'
-      app.logger.debug(request.files['voice'].filename) 
-      response = requests.post(self.base + "voice_add/" + user, data = request.form)
-      return response.json()
+    user = 'ad551946a8c4464694f831f4d13e2b3d'
+    print (request.files['voice'])
+    data = {
+      "data":request.files['voice']
+    }
+    response = requests.post(self.base + "voice_add/" + user, data = data)
+    return response.json()
 
