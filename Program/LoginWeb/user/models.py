@@ -57,16 +57,29 @@ class User:
     return jsonify({ "error": "Invalid login credentials" }), 401
 
   def voice_signup(self):
-    user = 'ad551946a8c4464694f831f4d13e2b3d'
-    print (request.files['voice'])
+    user = session['user']
     f = request.files['voice']
     f.save(os.path.join("./user/Temp", f.filename))
     a = open("./user/Temp/"+f.filename, 'rb')
+
     dataObj={}
     dataObj['user_id']=user
-    filesObj = [('voice', ('enrollment.wav', a, 'audio/wav'))]
-    print (filesObj)
-    response = requests.post(self.base + "voice_add/" + user, data = dataObj, files = filesObj)
-    print (filesObj)
+    filesObj = [('voice', (f.filename, a, 'audio/wav'))]
+    response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj)
+
+    os.remove("./user/Temp/"+f.filename)
     return response.json()
 
+  def voice_signin(self):
+    user = session['user']
+    f = request.files['voice']
+    f.save(os.path.join("./user/Temp", f.filename))
+    a = open("./user/Temp/"+f.filename, 'rb')
+
+    dataObj={}
+    dataObj['user_id']=user
+    filesObj = [('voice', (f.filename, a, 'audio/wav'))]
+    response = request.post(self.base + "voice_recog/", data = dataObj, files = filesObj)
+
+    os.remove("./user/Temp/"+f.filename)
+    return response.json()

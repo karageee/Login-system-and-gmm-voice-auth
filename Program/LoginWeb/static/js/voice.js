@@ -154,7 +154,15 @@ function createDownloadLink(blob) {
             type: 'POST',
             data: data,
             processData: false,
-            contentType: false
+            contentType: false,
+            success: function(resp){
+                if(filename == "3"){
+                    window.location.href = "/dashboard/";
+                }
+            },
+            error: function(resp){
+                $error.text(resp.responseJSON.error).removeClass("error--hidden");
+            }
         });
       e.preventDefault();
       });

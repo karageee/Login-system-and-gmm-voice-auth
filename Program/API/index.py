@@ -14,7 +14,7 @@ db = SQLAlchemy(app)
 parent_dir = "./app/voice_database"
 
 class UsersModel(db.Model):
-    auth_id = db.Column(db.Integer, primary_key=True)
+    auth_id = db.Column(db.String(100), primary_key=True)
     user_id = db.Column(db.String(100), nullable=False)
     voice_loc = db.Column(db.String(300), nullable=False)
     def __repr__(self):
@@ -26,7 +26,7 @@ user_post_args = reqparse.RequestParser()
 user_post_args.add_argument("user_id", type=str, help="User's UserID is required", required=True)
 
 user_fields = {
-    'auth_id' : fields.Integer,
+    'auth_id' : fields.String,
     'user_id' : fields.String,
     'voice_loc' : fields.String
 }
@@ -56,8 +56,8 @@ class Users(Resource):
         return user, 201
 
 class Voice_add(Resource):
-    def post(self, user_id):
-        path = os.path.join(parent_dir, user_id)
+    def post(self):
+        path = os.path.join(parent_dir, request.form['user_id'])
         if 'voice' not in request.files:
             return 'no voice found'  
         file = request.files['voice']
@@ -65,12 +65,12 @@ class Voice_add(Resource):
             abort (400, message="No file selected for uploading")
         
         file.save(os.path.join(path, file.filename))
-        voices.add_user(user_id)
+        voices.add_user(request.form['user_id'])
         return jsonify(message= "file successfully added", category= "success", status=200)
 
 class Voice_recog(Resource):
-    def post(self, user_id):
-        path = os.path.join(parent_dir, user_id)
+    def post(self):
+        path = os.path.join(parent_dir, request.form['user_id'])
         print(request.form.getlist)
         if 'voice' not in request.files:
             return 'no voice found'  
@@ -78,11 +78,11 @@ class Voice_recog(Resource):
         if file.filename == '':
             abort (400, message="No file selected for uploading")
         file.save(os.path.join(path, file.filename))
-        return jsonify(message= (voices.recognize(user_id, (os.path.join(path, file.filename)))), category="success", status=200)
+        return jsonify(message= (voices.recognize(request.form['user_id'], (os.path.join(path, file.filename)))), category="success", status=200)
 
 api.add_resource(Users, "/user/")
-api.add_resource(Voice_add, "/voice_add/<string:user_id>")
-api.add_resource(Voice_recog, "/voice_recog/<string:user_id>")
+api.add_resource(Voice_add, "/voice_add/")
+api.add_resource(Voice_recog, "/voice_recog/")
 
 if __name__ == "__main__":
     app.run(port=5001, debug=True)
