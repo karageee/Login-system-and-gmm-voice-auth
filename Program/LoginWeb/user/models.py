@@ -10,6 +10,7 @@ class User:
   def start_session(self, user):
     del user['password']
     session['logged_in'] = True
+    session['authenticated'] = False
     session['user'] = user
     return jsonify(user), 200
 
@@ -68,6 +69,7 @@ class User:
     response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj)
 
     os.remove("./user/Temp/"+f.filename)
+    session['authenticated'] = True
     return response.json()
 
   def voice_signin(self):
@@ -82,4 +84,5 @@ class User:
     response = request.post(self.base + "voice_recog/", data = dataObj, files = filesObj)
 
     os.remove("./user/Temp/"+f.filename)
+    session['authenticated'] = True
     return response.json()

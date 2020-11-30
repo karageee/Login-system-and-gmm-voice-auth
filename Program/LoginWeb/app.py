@@ -20,7 +20,15 @@ def login_required(f):
       return f(*args, **kwargs)
     else:
       return redirect('/')
-  
+  return wrap
+
+def Authentication_required(f):
+  @wraps(f)
+  def wrap(*args, **kwargs):
+    if 'authenticated' in session:
+      return f(*args, **kwargs)
+    else:
+      return redirect('/voice_signin/')
   return wrap
 
 # Routes
@@ -32,12 +40,19 @@ def home():
 
 @app.route('/dashboard/')
 @login_required
+@Authentication_required
 def dashboard():
   return render_template('dashboard.html')
 
 @app.route('/voice_signup/')
+@login_required
 def voice():
   return render_template('voice_signup.html')
+
+@app.route('/voice_signin/')
+@login_required
+def voice():
+  return render_template('voice_signin.html')
 
 if __name__ == '__main__':
   app.run(port=5000, debug=True)
