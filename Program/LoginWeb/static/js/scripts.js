@@ -32,7 +32,7 @@ $("form[name=login_form").submit(function(e) {
     data: data,
     dataType: "json",
     success: function(resp) {
-      window.location.href = "/dashboard/";
+      window.location.href = "/voice_signin/";
     },
     error: function(resp) {
       $error.text(resp.responseJSON.error).removeClass("error--hidden");

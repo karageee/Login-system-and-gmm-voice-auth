@@ -1,7 +1,6 @@
 from flask import Flask, render_template, session, redirect
 from functools import wraps
 from flask_cors import CORS
-from flask_cors.decorator import cross_origin
 import pymongo
 
 app = Flask(__name__)
@@ -46,12 +45,12 @@ def dashboard():
 
 @app.route('/voice_signup/')
 @login_required
-def voice():
+def voice_signup():
   return render_template('voice_signup.html')
 
 @app.route('/voice_signin/')
 @login_required
-def voice():
+def voice_signin():
   return render_template('voice_signin.html')
 
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ class User:
         "user_id": user['_id']
       }
       response = requests.post(self.base + "user/", data = user_id)
-      return response
+      return response.json()
 
     return jsonify({ "error": "Signup failed" }), 400
   
@@ -61,7 +61,7 @@ class User:
   def voice_signup(self):
     user = session['user']
     for i in range(3):
-      f = request.files['voice'+(i+1)]
+      f = request.files['voice'+str((i+1))]
       f.save(os.path.join("./user/Temp", f.filename))
       a = open("./user/Temp/"+f.filename, 'rb')
 
