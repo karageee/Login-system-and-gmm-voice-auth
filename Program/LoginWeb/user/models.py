@@ -4,6 +4,7 @@ from app import db
 import uuid
 import requests
 import os
+import json
 class User:
   base = "http://127.0.0.1:5001/"
 
@@ -59,18 +60,24 @@ class User:
 
   def voice_signup(self):
     user = session['user']
-    f = request.files['voice']
-    f.save(os.path.join("./user/Temp", f.filename))
-    a = open("./user/Temp/"+f.filename, 'rb')
+    for i in range(3):
+      f = request.files['voice'+(i+1)]
+      f.save(os.path.join("./user/Temp", f.filename))
+      a = open("./user/Temp/"+f.filename, 'rb')
 
-    dataObj={}
-    dataObj['user_id']=user
-    filesObj = [('voice', (f.filename, a, 'audio/wav'))]
-    response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj)
+      dataObj={}
+      dataObj['user_id']=user
+      filesObj = [('voice', (f.filename, a, 'audio/wav'))]
+      response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj)
 
-    os.remove("./user/Temp/"+f.filename)
-    session['authenticated'] = True
-    return response.json()
+      os.remove("./user/Temp/"+f.filename)
+
+      x = json.loads(response)
+      if (x["category"] == "success") and (f.filename == "3.wav"):
+        session['authenticated'] = True
+      if x["status" != 200]:
+        return jsonify({"error": x["message"]})
+    return redirect("/dashboard/")
 
   def voice_signin(self):
     user = session['user']
@@ -84,5 +91,9 @@ class User:
     response = request.post(self.base + "voice_recog/", data = dataObj, files = filesObj)
 
     os.remove("./user/Temp/"+f.filename)
-    session['authenticated'] = True
-    return response.json()
+    x = json.loads(response)
+    if(x["message"] == user):
+      session['authenticated'] = True
+    if x["status" != 200]:
+        return jsonify({"error": x["message"]})
+    return redirect("/dashboard/")

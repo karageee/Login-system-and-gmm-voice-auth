@@ -113,4 +113,4 @@ def recognize(user_id, voice):
     if identity != user_id:
         return ("Unknown voice!")
     
-    return ("Recognized as - " + identity)
+    return (identity)

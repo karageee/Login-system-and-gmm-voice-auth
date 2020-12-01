@@ -44,7 +44,7 @@ class Users(Resource):
         args = user_post_args.parse_args()
         response = UsersModel.query.filter_by(user_id=args['user_id']).first()
         if response:
-            abort(409, message="User id taken...")
+            abort(message="User id taken...", status=409)
 
         path = os.path.join(parent_dir, args['user_id'])
         os.mkdir(path)
@@ -53,7 +53,7 @@ class Users(Resource):
         db.session.add(user)
         db.session.commit()
 
-        return user, 201
+        return jsonify(message="user created", status=201)
 
 class Voice_add(Resource):
     def post(self):
@@ -62,7 +62,7 @@ class Voice_add(Resource):
             return 'no voice found'  
         file = request.files['voice']
         if file.filename == '':
-            abort (400, message="No file selected for uploading")
+            abort (message="No file selected for uploading", status=400)
         
         file.save(os.path.join(path, file.filename))
         voices.add_user(request.form['user_id'])
@@ -76,7 +76,7 @@ class Voice_recog(Resource):
             return 'no voice found'  
         file = request.files['voice']
         if file.filename == '':
-            abort (400, message="No file selected for uploading")
+            abort (message="No file selected for uploading", status=400)
         file.save(os.path.join(path, file.filename))
         return jsonify(message= (voices.recognize(request.form['user_id'], (os.path.join(path, file.filename)))), category="success", status=200)
 
