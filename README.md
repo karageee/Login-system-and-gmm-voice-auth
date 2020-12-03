@@ -1,2 +1,2 @@
-# Skripshits
+# Skripsi
  
