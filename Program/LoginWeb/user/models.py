@@ -75,9 +75,9 @@ class User:
       x = json.loads(response)
       if (x["category"] == "success") and (f.filename == "3.wav"):
         session['authenticated'] = True
-      if x["status" != 200]:
+        return redirect("/dashboard/")
+      if x["status"] != 200:
         return jsonify({"error": x["message"]})
-    return redirect("/dashboard/")
 
   def voice_signin(self):
     user = session['user']
@@ -94,6 +94,6 @@ class User:
     x = json.loads(response)
     if(x["message"] == user):
       session['authenticated'] = True
-    if x["status" != 200]:
+    if x["status"] != 200:
         return jsonify({"error": x["message"]})
     return redirect("/dashboard/")
