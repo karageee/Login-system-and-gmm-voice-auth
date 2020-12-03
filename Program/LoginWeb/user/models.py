@@ -4,12 +4,14 @@ from app import db
 import uuid
 import requests
 import os
+import json
 class User:
-  base = "http://192.168.100.22:5001/"
+  base = "http://127.0.0.1:5001/"
 
   def start_session(self, user):
     del user['password']
     session['logged_in'] = True
+    session['authenticated'] = False
     session['user'] = user
     return jsonify(user), 200
 
@@ -37,7 +39,7 @@ class User:
         "user_id": user['_id']
       }
       response = requests.post(self.base + "user/", data = user_id)
-      return response
+      return response.json()
 
     return jsonify({ "error": "Signup failed" }), 400
   
@@ -57,11 +59,41 @@ class User:
     return jsonify({ "error": "Invalid login credentials" }), 401
 
   def voice_signup(self):
-    user = 'ad551946a8c4464694f831f4d13e2b3d'
-    print (request.files['voice'])
-    f = request.files['voice']
-    f.save(os.path.join("D:/Tugas/Skripshits/Program/LoginWeb/user/Temp", f.filename))
-    data = {'voice': open("D:/Tugas/Skripshits/Program/LoginWeb/user/Temp/"+f.filename, 'rb')}
-    response = requests.post(self.base + "voice_add/" + user, data = data)
-    return response.json()
+    user = session['user']
+    for i in range(3):
+      f = request.files['voice'+str((i+1))]
+      f.save(os.path.join("./user/Temp", f.filename))
+      a = open("./user/Temp/"+f.filename, 'rb')
 
+      dataObj={}
+      dataObj['user_id']=user
+      filesObj = [('voice', (f.filename, a, 'audio/wav'))]
+      response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj)
+
+      os.remove("./user/Temp/"+f.filename)
+
+      x = json.loads(response)
+      if (x["category"] == "success") and (f.filename == "3.wav"):
+        session['authenticated'] = True
+        return redirect("/dashboard/")
+      if x["status"] != 200:
+        return jsonify({"error": x["message"]})
+
+  def voice_signin(self):
+    user = session['user']
+    f = request.files['voice']
+    f.save(os.path.join("./user/Temp", f.filename))
+    a = open("./user/Temp/"+f.filename, 'rb')
+
+    dataObj={}
+    dataObj['user_id']=user
+    filesObj = [('voice', (f.filename, a, 'audio/wav'))]
+    response = request.post(self.base + "voice_recog/", data = dataObj, files = filesObj)
+
+    os.remove("./user/Temp/"+f.filename)
+    x = json.loads(response)
+    if(x["message"] == user):
+      session['authenticated'] = True
+    if x["status"] != 200:
+        return jsonify({"error": x["message"]})
+    return redirect("/dashboard/")

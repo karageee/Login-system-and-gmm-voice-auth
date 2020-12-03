@@ -12,6 +12,7 @@ var audioContext //audio context to help us record
 var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
 var pauseButton = document.getElementById("pauseButton");
+var data = new FormData;
 
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
@@ -145,16 +146,19 @@ function createDownloadLink(blob) {
     //add the save to disk link to li
     li.appendChild(link);
 
+    data.append("voice"+filename, blob, filename + ".wav")
+
     //upload
     $('form[name=voice_signup').submit(function(e){
-        var data = new FormData;
-        data.append("voice", blob, filename + ".wav")
         $.ajax({
             url: '/user/voice_signup',
             type: 'POST',
             data: data,
             processData: false,
-            contentType: false
+            contentType: false,
+            error: function(resp){
+                $error.text(resp.responseJSON.error).removeClass("error--hidden");
+            }
         });
       e.preventDefault();
       });

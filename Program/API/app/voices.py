@@ -108,6 +108,9 @@ def recognize(user_id, voice):
   
     # if voice not recognized than terminate the process
     if identity == 'unknown':
-            return print("Not Recognized! Try again...")
-   
-    return ("Recognized as - " + identity)
+        return ("Not Recognized! Try again...")
+
+    if identity != user_id:
+        return ("Unknown voice!")
+    
+    return (identity)
