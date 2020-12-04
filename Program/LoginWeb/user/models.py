@@ -59,16 +59,20 @@ class User:
     return jsonify({ "error": "Invalid login credentials" }), 401
 
   def voice_signup(self):
-    user = session['user']
+    user = session['user']["_id"]
     for i in range(3):
       f = request.files['voice'+str((i+1))]
       f.save(os.path.join("./user/Temp", f.filename))
       a = open("./user/Temp/"+f.filename, 'rb')
 
+      print(f.filename)
+
       dataObj={}
       dataObj['user_id']=user
       filesObj = [('voice', (f.filename, a, 'audio/wav'))]
       response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj)
+
+      a.close()
 
       os.remove("./user/Temp/"+f.filename)
 
@@ -80,7 +84,7 @@ class User:
         return jsonify({"error": x["message"]})
 
   def voice_signin(self):
-    user = session['user']
+    user = session['user']["_id"]
     f = request.files['voice']
     f.save(os.path.join("./user/Temp", f.filename))
     a = open("./user/Temp/"+f.filename, 'rb')
@@ -88,12 +92,17 @@ class User:
     dataObj={}
     dataObj['user_id']=user
     filesObj = [('voice', (f.filename, a, 'audio/wav'))]
-    response = request.post(self.base + "voice_recog/", data = dataObj, files = filesObj)
+    response = requests.post(self.base + "voice_recog/", data = dataObj, files = filesObj)
+
+    a.close()
 
     os.remove("./user/Temp/"+f.filename)
-    x = json.loads(response)
-    if(x["message"] == user):
+    
+    x = response.json()
+    print (user)
+    print (x)
+    if x['message'] == user:
       session['authenticated'] = True
-    if x["status"] != 200:
-        return jsonify({"error": x["message"]})
-    return redirect("/dashboard/")
+      return redirect("/dashboard/")
+    if x['status'] != 200:
+      return jsonify({"error": x['message']})
