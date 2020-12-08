@@ -19,6 +19,8 @@ class UsersModel(db.Model):
     def __repr__(self):
         return f"Users(user_id = {user_id}, voice_loc = {voice_loc})"
 
+db.create_all()
+
 user_post_args = reqparse.RequestParser()
 user_post_args.add_argument("user_id", type=str, help="User's UserID is required", required=True)
 
@@ -62,7 +64,8 @@ class Voice_add(Resource):
             abort (message="No file selected for uploading", status=400)
         
         file.save(os.path.join(path, file.filename))
-        voices.add_user(request.form['user_id'])
+        if file.filename == "3.wav":
+            voices.add_user(request.form['user_id'])
         return jsonify(message= "file successfully added", category= "success", status=200)
 
 class Voice_recog(Resource):
@@ -75,7 +78,9 @@ class Voice_recog(Resource):
         if file.filename == '':
             abort (message="No file selected for uploading", status=400)
         file.save(os.path.join(path, file.filename))
-        return jsonify(message= (voices.recognize(request.form['user_id'], (os.path.join(path, file.filename)))), category="success", status=200)
+        msg = voices.recognize(request.form['user_id'], (os.path.join(path, file.filename)))
+        print (msg)
+        return jsonify(message= msg, category="success", status=200)
 
 api.add_resource(Users, "/user/")
 api.add_resource(Voice_add, "/voice_add/")

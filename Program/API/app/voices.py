@@ -1,3 +1,4 @@
+from logging import log
 import os
 import pickle
 from scipy.io.wavfile import read
@@ -30,7 +31,7 @@ def calculate_delta(array):
 
 #convert audio to mfcc features
 def extract_features(audio,rate):    
-    mfcc_feat = mfcc.mfcc(audio,rate, 0.025, 0.01,20,appendEnergy = True, nfft=1103)
+    mfcc_feat = mfcc.mfcc(audio,rate, 0.025, 0.01,20,appendEnergy = True, nfft=1200)
     mfcc_feat = preprocessing.scale(mfcc_feat)
     delta = calculate_delta(mfcc_feat)
 
@@ -42,9 +43,9 @@ def add_user(user_id):
     
     name = user_id
     
-    source = "./backend/voice_database/" + name
+    source = "./app/voice_database/" + name
 
-    dest =  "./backend/gmm_models/"
+    dest =  "./app/gmm_models/"
     count = 1
 
     for path in os.listdir(source):
@@ -63,7 +64,7 @@ def add_user(user_id):
         else:
             features = np.vstack((features, vector))
             
-        # when features of 3 files of speaker are concatenated, then do model training
+        # when features of 3 files of speaker are exist and concatenated, then do model training
         if count == 3:    
             gmm = GaussianMixture(n_components = 16, max_iter = 200, covariance_type='diag',n_init = 3)
             gmm.fit(features)
@@ -87,8 +88,7 @@ def recognize(user_id, voice):
 
     models    = [pickle.load(open(fname,'rb')) for fname in gmm_files]
 
-    speakers   = [fname.split("/")[-1].split(".gmm")[0] for fname 
-               in gmm_files]
+    speakers   = [fname.split("/")[-1].split(".gmm")[0] for fname in gmm_files]
  
     #read test file
     sr,audio = read(voice)
@@ -102,15 +102,18 @@ def recognize(user_id, voice):
         gmm = models[i]         
         scores = np.array(gmm.score(vector))
         log_likelihood[i] = scores.sum()
+        print (scores)
 
     pred = np.argmax(log_likelihood)
     identity = speakers[pred]
+    print(pred)
   
     # if voice not recognized than terminate the process
     if identity == 'unknown':
         return ("Not Recognized! Try again...")
 
+    # if voice is not the same then return unknown
     if identity != user_id:
         return ("Unknown voice!")
-    
+
     return (identity)

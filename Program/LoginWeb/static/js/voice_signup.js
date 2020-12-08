@@ -131,6 +131,9 @@ function createDownloadLink(blob) {
             data: data,
             processData: false,
             contentType: false,
+            success: function(resp){
+                window.location.href = "/dashboard/";
+            },
             error: function(resp){
                 $error.text(resp.responseJSON.error).removeClass("error--hidden");
             }
