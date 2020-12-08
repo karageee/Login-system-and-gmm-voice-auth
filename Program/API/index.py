@@ -10,7 +10,7 @@ import jwt
 app = Flask("__name__")
 CORS(app)
 api = Api(app)
-app.config['SECRET_KEY'] = b'k\x0f\xf4\x84S\xf5\xc3jB2\\\x0b'
+app.config['SECRET_KEY'] = '144cc764-0878-4484-9a36-ada1128fb3ae'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user/database.db'
 db = SQLAlchemy(app)
 parent_dir = "./app/voice_database"
@@ -40,19 +40,20 @@ def token_required(f):
         # jwt is passed in the request header 
         if 'x-access-token' in request.headers: 
             token = request.headers['x-access-token'] 
+            print (token)
         # return 401 if token is not passed 
         if not token: 
             return jsonify({'message' : 'Token is missing !!'}), 401
         try: 
             # decoding the payload to fetch the stored details 
             data = jwt.decode(token, app.config['SECRET_KEY']) 
-            current_user = UsersModel.query.filter_by(user_id=data['user_id'].first())
+            print(data)
         except: 
             return jsonify({ 
                 'message' : 'Token is invalid !!'
             }), 401
         # returns the current logged in users contex to the routes 
-        return  f(current_user, *args, **kwargs) 
+        return  f(*args, **kwargs) 
     return decorated 
 
 class Users(Resource):

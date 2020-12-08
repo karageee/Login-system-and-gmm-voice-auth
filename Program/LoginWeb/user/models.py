@@ -12,7 +12,7 @@ import jwt
 
 class User:
   base = "http://127.0.0.1:5001/"
-  api_key = b'k\x0f\xf4\x84S\xf5\xc3jB2\\\x0b'
+  api_key = "144cc764-0878-4484-9a36-ada1128fb3ae"
 
   def start_session(self, user):
     del user['password']
@@ -67,6 +67,7 @@ class User:
   def voice_signup(self):
     user = session['user']["_id"]
     for i in range(3):
+      token = None
       f = request.files['voice'+str((i+1))]
       f.save(os.path.join("./user/Temp", f.filename))
       a = open("./user/Temp/"+f.filename, 'rb')
@@ -78,7 +79,9 @@ class User:
       filesObj = [('voice', (f.filename, a, 'audio/wav'))]
 
       token = jwt.encode({'user_id': user, 'exp':datetime.utcnow() + timedelta(seconds=5)}, self.api_key)
-      headersdata = {"x-access-token": token}
+      print(str(token.decode('UTF-8')))
+      headersdata = {}
+      headersdata['x-access-token'] = str(token.decode('UTF-8'))
 
       response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj, headers=headersdata)
 
@@ -104,7 +107,8 @@ class User:
     filesObj = [('voice', (f.filename, a, 'audio/wav'))]
 
     token = jwt.encode({'user_id': user, 'exp':datetime.utcnow() + timedelta(seconds=5)}, self.api_key)
-    headersdata = {"x-access-token": token}
+    headersdata = {}
+    headersdata['x-access-token'] = token
 
     response = requests.post(self.base + "voice_recog/", data = dataObj, files = filesObj, headers=headersdata)
 
