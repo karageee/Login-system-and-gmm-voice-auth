@@ -1,12 +1,18 @@
-from flask import Flask, jsonify, request, session, redirect, send_from_directory
+from datetime import timedelta
+from flask import Flask, jsonify, request, session, redirect
 from passlib.hash import md5_crypt
+from werkzeug.datastructures import Headers
 from app import db
+from datetime import datetime
 import uuid
 import requests
 import os
 import json
+import jwt
+
 class User:
   base = "http://127.0.0.1:5001/"
+  api_key = b'k\x0f\xf4\x84S\xf5\xc3jB2\\\x0b'
 
   def start_session(self, user):
     del user['password']
@@ -70,7 +76,11 @@ class User:
       dataObj={}
       dataObj['user_id']=user
       filesObj = [('voice', (f.filename, a, 'audio/wav'))]
-      response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj)
+
+      token = jwt.encode({'user_id': user, 'exp':datetime.utcnow() + timedelta(seconds=5)}, self.api_key)
+      headersdata = {"x-access-token": token}
+
+      response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj, headers=headersdata)
 
       a.close()
 
@@ -92,7 +102,11 @@ class User:
     dataObj={}
     dataObj['user_id']=user
     filesObj = [('voice', (f.filename, a, 'audio/wav'))]
-    response = requests.post(self.base + "voice_recog/", data = dataObj, files = filesObj)
+
+    token = jwt.encode({'user_id': user, 'exp':datetime.utcnow() + timedelta(seconds=5)}, self.api_key)
+    headersdata = {"x-access-token": token}
+
+    response = requests.post(self.base + "voice_recog/", data = dataObj, files = filesObj, headers=headersdata)
 
     a.close()
 

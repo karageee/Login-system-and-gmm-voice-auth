@@ -2,12 +2,15 @@ from flask import Flask, request, jsonify
 from flask_restful import Api, Resource, abort, marshal_with, reqparse, fields
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from functools import wraps
 from app import voices
 import os
+import jwt
 
 app = Flask("__name__")
 CORS(app)
 api = Api(app)
+app.config['SECRET_KEY'] = b'k\x0f\xf4\x84S\xf5\xc3jB2\\\x0b'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user/database.db'
 db = SQLAlchemy(app)
 parent_dir = "./app/voice_database"
@@ -29,6 +32,28 @@ user_fields = {
     'user_id' : fields.String,
     'voice_loc' : fields.String
 }
+
+def token_required(f): 
+    @wraps(f) 
+    def decorated(*args, **kwargs): 
+        token = None
+        # jwt is passed in the request header 
+        if 'x-access-token' in request.headers: 
+            token = request.headers['x-access-token'] 
+        # return 401 if token is not passed 
+        if not token: 
+            return jsonify({'message' : 'Token is missing !!'}), 401
+        try: 
+            # decoding the payload to fetch the stored details 
+            data = jwt.decode(token, app.config['SECRET_KEY']) 
+            current_user = UsersModel.query.filter_by(user_id=data['user_id'].first())
+        except: 
+            return jsonify({ 
+                'message' : 'Token is invalid !!'
+            }), 401
+        # returns the current logged in users contex to the routes 
+        return  f(current_user, *args, **kwargs) 
+    return decorated 
 
 class Users(Resource):
     @marshal_with(user_fields)
@@ -55,6 +80,7 @@ class Users(Resource):
         return jsonify(message="user created", status=201)
 
 class Voice_add(Resource):
+    @token_required
     def post(self):
         path = os.path.join(parent_dir, request.form['user_id'])
         if 'voice' not in request.files:
@@ -69,6 +95,7 @@ class Voice_add(Resource):
         return jsonify(message= "file successfully added", category= "success", status=200)
 
 class Voice_recog(Resource):
+    @token_required
     def post(self):
         path = os.path.join(parent_dir, request.form['user_id'])
         print(request.form.getlist)
