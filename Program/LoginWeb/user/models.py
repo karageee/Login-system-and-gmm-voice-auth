@@ -67,7 +67,6 @@ class User:
   def voice_signup(self):
     user = session['user']["_id"]
     for i in range(3):
-      token = None
       f = request.files['voice'+str((i+1))]
       f.save(os.path.join("./user/Temp", f.filename))
       a = open("./user/Temp/"+f.filename, 'rb')
@@ -78,7 +77,7 @@ class User:
       dataObj['user_id']=user
       filesObj = [('voice', (f.filename, a, 'audio/wav'))]
 
-      token = jwt.encode({'user_id': user, 'exp':datetime.utcnow() + timedelta(seconds=5)}, self.api_key)
+      token = jwt.encode({'user_id': user, 'exp':datetime.utcnow() + timedelta(seconds=0.1)}, self.api_key)
       print(str(token.decode('UTF-8')))
       headersdata = {}
       headersdata['x-access-token'] = str(token.decode('UTF-8'))
@@ -89,7 +88,8 @@ class User:
 
       os.remove("./user/Temp/"+f.filename)
 
-      x = json.loads(response)
+      print(response.json())
+      x = json.loads(response.json())
       if (x["category"] == "success") and (f.filename == "3.wav"):
         session['authenticated'] = True
         return redirect("/dashboard/")

@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 from flask_restful import Api, Resource, abort, marshal_with, reqparse, fields
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from functools import wraps
 from app import voices
 import os
 import jwt
@@ -22,10 +21,12 @@ class UsersModel(db.Model):
     def __repr__(self):
         return f"Users(user_id = {user_id}, voice_loc = {voice_loc})"
 
-db.create_all()
+# db.create_all()
 
 user_post_args = reqparse.RequestParser()
 user_post_args.add_argument("user_id", type=str, help="User's UserID is required", required=True)
+user_get_args = reqparse.RequestParser()
+user_get_args.add_argument("user_id", type=str, help="User's UserID is required", required=True)
 
 user_fields = {
     'auth_id' : fields.String,
@@ -33,14 +34,12 @@ user_fields = {
     'voice_loc' : fields.String
 }
 
-def token_required(f): 
-    @wraps(f) 
-    def decorated(*args, **kwargs): 
+class Users(Resource):
+    def get(self):
         token = None
         # jwt is passed in the request header 
         if 'x-access-token' in request.headers: 
-            token = request.headers['x-access-token'] 
-            print (token)
+            token = request.headers['x-access-token']
         # return 401 if token is not passed 
         if not token: 
             return jsonify({'message' : 'Token is missing !!'}), 401
@@ -52,20 +51,34 @@ def token_required(f):
             return jsonify({ 
                 'message' : 'Token is invalid !!'
             }), 401
-        # returns the current logged in users contex to the routes 
-        return  f(*args, **kwargs) 
-    return decorated 
-
-class Users(Resource):
-    @marshal_with(user_fields)
-    def get(self):
-        response = UsersModel.query.all()
-        if not response:
+        
+        args = user_get_args.parse_args()
+        query = UsersModel.query.filter_by(user_id=args['user_id']).first()
+        if not query:
             abort(404, message="Cannot find user id")
-        return response
+        if os.path.isfile(query.voice_loc):
+            return jsonify(message="voice found", status=200)
+        else:
+            return jsonify(message="There's no voice yet", status=404)
 
     @marshal_with(user_fields)
     def post(self):
+        token = None
+        # jwt is passed in the request header 
+        if 'x-access-token' in request.headers: 
+            token = request.headers['x-access-token']
+        # return 401 if token is not passed 
+        if not token: 
+            return jsonify({'message' : 'Token is missing !!'}), 401
+        try: 
+            # decoding the payload to fetch the stored details 
+            data = jwt.decode(token, app.config['SECRET_KEY']) 
+            print(data)
+        except: 
+            return jsonify({ 
+                'message' : 'Token is invalid !!'
+            }), 401
+        
         args = user_post_args.parse_args()
         response = UsersModel.query.filter_by(user_id=args['user_id']).first()
         if response:
@@ -81,8 +94,23 @@ class Users(Resource):
         return jsonify(message="user created", status=201)
 
 class Voice_add(Resource):
-    @token_required
     def post(self):
+        token = None
+        # jwt is passed in the request header 
+        if 'x-access-token' in request.headers: 
+            token = request.headers['x-access-token']
+        # return 401 if token is not passed 
+        if not token: 
+            return jsonify({'message' : 'Token is missing !!'}), 401
+        try: 
+            # decoding the payload to fetch the stored details 
+            data = jwt.decode(token, app.config['SECRET_KEY']) 
+            print(data)
+        except: 
+            return jsonify({ 
+                'message' : 'Token is invalid !!'
+            }), 401
+
         path = os.path.join(parent_dir, request.form['user_id'])
         if 'voice' not in request.files:
             return 'no voice found'  
@@ -96,8 +124,23 @@ class Voice_add(Resource):
         return jsonify(message= "file successfully added", category= "success", status=200)
 
 class Voice_recog(Resource):
-    @token_required
     def post(self):
+        token = None
+        # jwt is passed in the request header 
+        if 'x-access-token' in request.headers: 
+            token = request.headers['x-access-token']
+        # return 401 if token is not passed 
+        if not token: 
+            return jsonify({'message' : 'Token is missing !!'}), 401
+        try: 
+            # decoding the payload to fetch the stored details 
+            data = jwt.decode(token, app.config['SECRET_KEY']) 
+            print(data)
+        except: 
+            return jsonify({ 
+                'message' : 'Token is invalid !!'
+            }), 401
+        
         path = os.path.join(parent_dir, request.form['user_id'])
         print(request.form.getlist)
         if 'voice' not in request.files:
