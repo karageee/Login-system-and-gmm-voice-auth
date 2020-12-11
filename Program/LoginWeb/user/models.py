@@ -2,7 +2,7 @@ from datetime import timedelta
 from flask import Flask, jsonify, request, session, redirect
 from passlib.hash import md5_crypt
 from werkzeug.datastructures import Headers
-from app import db
+from app import db, app
 from datetime import datetime
 import uuid
 import requests
@@ -13,6 +13,13 @@ import jwt
 class User:
   base = "http://127.0.0.1:5001/"
   api_key = "144cc764-0878-4484-9a36-ada1128fb3ae"
+
+  def jwt_encode(self):
+    token = jwt.encode({'app_id': app.secret_key, 'exp':datetime.utcnow() + timedelta(seconds=0.1)}, self.api_key)
+    print(str(token.decode('UTF-8')))
+    headersdata = {}
+    headersdata['x-access-token'] = str(token.decode('UTF-8'))
+    return headersdata
 
   def start_session(self, user):
     del user['password']
@@ -44,7 +51,7 @@ class User:
       user_id={
         "user_id": user['_id']
       }
-      response = requests.post(self.base + "user/", data = user_id)
+      response = requests.post(self.base + "user/", data = user_id, headers=self.jwt_encode())
       return response.json()
 
     return jsonify({ "error": "Signup failed" }), 400
@@ -77,12 +84,7 @@ class User:
       dataObj['user_id']=user
       filesObj = [('voice', (f.filename, a, 'audio/wav'))]
 
-      token = jwt.encode({'user_id': user, 'exp':datetime.utcnow() + timedelta(seconds=0.1)}, self.api_key)
-      print(str(token.decode('UTF-8')))
-      headersdata = {}
-      headersdata['x-access-token'] = str(token.decode('UTF-8'))
-
-      response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj, headers=headersdata)
+      response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj, headers=self.jwt_encode)
 
       a.close()
 
@@ -106,21 +108,25 @@ class User:
     dataObj['user_id']=user
     filesObj = [('voice', (f.filename, a, 'audio/wav'))]
 
-    token = jwt.encode({'user_id': user, 'exp':datetime.utcnow() + timedelta(seconds=5)}, self.api_key)
-    headersdata = {}
-    headersdata['x-access-token'] = token
+    check_voice_exist = requests.get(self.base + "user/", data = dataObj, headers = self.jwt_encode())
+    result = check_voice_exist.json()
+    if(result['status'] == 404):
+      a.close()
+      os.remove("./user/Temp/"+f.filename)
+      return redirect("/voice_signup/")
+    elif (result['status'] == 200):
+      response = requests.post(self.base + "voice_recog/", data = dataObj, files = filesObj, headers=self.jwt_encode())
 
-    response = requests.post(self.base + "voice_recog/", data = dataObj, files = filesObj, headers=headersdata)
-
-    a.close()
-
-    os.remove("./user/Temp/"+f.filename)
+      a.close()
+      os.remove("./user/Temp/"+f.filename)
     
-    x = response.json()
-    print (user)
-    print (x)
-    if x['message'] == user:
-      session['authenticated'] = True
-      return redirect("/dashboard/")
-    if x['status'] != 200:
-      return jsonify({"error": x['message']})
+      x = response.json()
+      print (user)
+      print (x)
+      if x['message'] == user:
+        session['authenticated'] = True
+        return redirect("/dashboard/")
+      if x['status'] != 200:
+        return jsonify({"error": x['message']})
+
+
