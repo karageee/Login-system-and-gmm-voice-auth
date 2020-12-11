@@ -1,7 +1,6 @@
 from datetime import timedelta
 from flask import Flask, jsonify, request, session, redirect
 from passlib.hash import md5_crypt
-from werkzeug.datastructures import Headers
 from app import db, app
 from datetime import datetime
 import uuid
