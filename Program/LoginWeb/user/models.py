@@ -14,7 +14,7 @@ class User:
   api_key = "144cc764-0878-4484-9a36-ada1128fb3ae"
 
   def jwt_encode(self):
-    token = jwt.encode({'app_id': app.secret_key, 'exp':datetime.utcnow() + timedelta(seconds=0.1)}, self.api_key)
+    token = jwt.encode({'app_id': app.secret_key, 'exp':datetime.utcnow() + timedelta(seconds=1)}, self.api_key)
     print(str(token.decode('UTF-8')))
     headersdata = {}
     headersdata['x-access-token'] = str(token.decode('UTF-8'))
