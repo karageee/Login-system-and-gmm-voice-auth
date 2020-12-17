@@ -86,6 +86,7 @@ class User:
       
       print(response.json())
       a.close()
+      os.remove("./user/Temp/" + f.filename)
 
       x = response.json()
       if (x["category"] == "success") and (f.filename == "3.wav"):
