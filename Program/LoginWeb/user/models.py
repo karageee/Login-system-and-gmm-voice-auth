@@ -6,7 +6,6 @@ from datetime import datetime
 import uuid
 import requests
 import os
-import json
 import jwt
 
 class User:
