@@ -1,4 +1,3 @@
-from logging import log
 import os
 import pickle
 from scipy.io.wavfile import read
@@ -82,9 +81,10 @@ def add_user(user_id):
 def recognize(user_id, voice):
     audio = voice
 
-    modelpath = "./app/gmm_models/"
+    modelpath = "./app/gmm_models"
 
-    gmm_files = [os.path.join(modelpath,fname) for fname in os.listdir(modelpath) if fname.endswith('.gmm')]
+    gmm_files = [os.path.join(modelpath, fname) for fname in os.listdir(modelpath) if fname.endswith('.gmm')]
+    print (gmm_files)
 
     models    = [pickle.load(open(fname,'rb')) for fname in gmm_files]
 
@@ -107,13 +107,14 @@ def recognize(user_id, voice):
     pred = np.argmax(log_likelihood)
     identity = speakers[pred]
     print(pred)
+    print(identity)
   
     # if voice not recognized than terminate the process
     if identity == 'unknown':
         return ("Not Recognized! Try again...")
 
     # if voice is not the same then return unknown
-    if identity != user_id:
+    if identity != ("gmm_models\\" + user_id):
         return ("Unknown voice!")
 
-    return (identity)
+    return (user_id)

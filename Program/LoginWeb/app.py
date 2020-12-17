@@ -24,7 +24,7 @@ def login_required(f):
 def Authentication_required(f):
   @wraps(f)
   def wrap(*args, **kwargs):
-    if 'authenticated' in session:
+    if 'authenticated' in session and 'logged_in' in session:
       return f(*args, **kwargs)
     else:
       return redirect('/voice_signin/')
@@ -38,7 +38,6 @@ def home():
   return render_template('home.html')
 
 @app.route('/dashboard/')
-@login_required
 @Authentication_required
 def dashboard():
   return render_template('dashboard.html')

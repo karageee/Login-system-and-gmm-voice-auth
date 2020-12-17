@@ -11,6 +11,8 @@ var audioContext //audio context to help us record
 
 var recordButton = document.getElementById("recordButton");
 
+var data = new FormData;
+
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
 
@@ -115,34 +117,31 @@ function createDownloadLink(blob) {
     li.appendChild(au);
 
     //add the filename to the li
-    li.appendChild(document.createTextNode(filename+".wav "))
+    li.appendChild(document.createTextNode(filename+".wav "));
+    
+    data.append("voice", blob, filename + ".wav");
 
     //add the save to disk link to li
     li.appendChild(link);
 
-    //upload
-    $('form[name=voice_signup').submit(function(e){
-        var data = new FormData;
-        data.append("voice", blob, filename + ".wav")
-        $.ajax({
-            url: '/user/voice_signin',
-            type: 'POST',
-            data: data,
-            processData: false,
-            contentType: false,
-            success: function(resp){
-                window.location.href = "/dashboard/";
-            },
-            error: function(resp){
-                $error.text(resp.responseJSON.error).removeClass("error--hidden");
-            }
-        });
-      e.preventDefault();
-      });
-
-    li.appendChild(document.createTextNode (" "))//add a space in between
+    li.appendChild(document.createTextNode (" "));//add a space in between
     // li.appendChild(upload)//add the upload link to li
 
     //add the li element to the ol
     recordingsList.appendChild(li);
 }
+
+//upload
+$('form[name=voice_signup').submit(function(e){
+    $.ajax({
+        url: '/user/voice_signin',
+        type: 'POST',
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function(resp){
+            window.location.href = "/dashboard/";
+        }
+    });
+  e.preventDefault();
+  });

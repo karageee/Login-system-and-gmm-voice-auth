@@ -11,10 +11,10 @@ import jwt
 
 class User:
   base = "http://127.0.0.1:5001/"
-  api_key = "144cc764-0878-4484-9a36-ada1128fb3ae"
 
   def jwt_encode(self):
-    token = jwt.encode({'app_id': app.secret_key, 'exp':datetime.utcnow() + timedelta(seconds=1)}, self.api_key)
+    api_key = "144cc764-0878-4484-9a36-ada1128fb3ae"
+    token = jwt.encode({'app_id': app.secret_key, 'exp':datetime.utcnow() + timedelta(seconds=5)}, api_key)
     print(str(token.decode('UTF-8')))
     headersdata = {}
     headersdata['x-access-token'] = str(token.decode('UTF-8'))
@@ -73,24 +73,21 @@ class User:
   def voice_signup(self):
     user = session['user']["_id"]
     for i in range(3):
-      f = request.files['voice'+str((i+1))]
+      f = request.files[('voice'+str(i+1))]
       f.save(os.path.join("./user/Temp", f.filename))
+      print(i)
       a = open("./user/Temp/"+f.filename, 'rb')
-
-      print(f.filename)
 
       dataObj={}
       dataObj['user_id']=user
       filesObj = [('voice', (f.filename, a, 'audio/wav'))]
 
-      response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj, headers=self.jwt_encode)
-
+      response = requests.post(self.base + "voice_add/", data = dataObj, files = filesObj, headers=self.jwt_encode())
+      
+      print(response.json())
       a.close()
 
-      os.remove("./user/Temp/"+f.filename)
-
-      print(response.json())
-      x = json.loads(response.json())
+      x = response.json()
       if (x["category"] == "success") and (f.filename == "3.wav"):
         session['authenticated'] = True
         return redirect("/dashboard/")
