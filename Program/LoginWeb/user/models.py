@@ -92,7 +92,7 @@ class User:
         session['authenticated'] = True
         return redirect("/dashboard/")
       if x["status"] != 200:
-        return jsonify({"error": x["message"]})
+        return jsonify({"error": x["message"]}), 401
 
   def voice_signin(self):
     user = session['user']["_id"]
@@ -123,6 +123,6 @@ class User:
         session['authenticated'] = True
         return redirect("/dashboard/")
       if x['status'] != 200:
-        return jsonify({"error": x['message']})
+        return jsonify({"error": x['message']}), 401
 
 
