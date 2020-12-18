@@ -10,11 +10,13 @@ var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext //audio context to help us record
 
 var recordButton = document.getElementById("recordButton");
+var resetButton = document.getElementById("resetButton");
 
 var data = new FormData;
 
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
+resetButton.addEventListener("click", reset);
 
 var filename = 0;
 
@@ -94,6 +96,15 @@ function stopRecording() {
     rec.exportWAV(createDownloadLink);
 }
 
+function reset(){
+    console.log("Reset button clicked");
+
+    while (recordingsList.hasChildNodes()){
+        recordingsList.removeChild(recordingsList.firstChild);
+    }
+    filename = 0;
+}
+
 function createDownloadLink(blob) {
 
     var url = URL.createObjectURL(blob);
@@ -101,8 +112,11 @@ function createDownloadLink(blob) {
     var li = document.createElement('li');
     var link = document.createElement('a');
 
-    //name of .wav file to use during upload and download (without extendion)
+    //name of .wav file to use during upload and download (without extension)
     filename = filename+1;
+    if(filename == 3){
+        recordButton.disabled = true;
+    }
 
     //add controls to the <audio> element
     au.controls = true;
@@ -129,6 +143,7 @@ function createDownloadLink(blob) {
 
     //add the li element to the ol
     recordingsList.appendChild(li);
+    recordButton.disabled = true;
 }
 
 //upload
@@ -141,6 +156,11 @@ $('form[name=voice_signup').submit(function(e){
         contentType: false,
         success: function(resp){
             window.location.href = "/dashboard/";
+        },
+        error: function(resp){
+            $error.text(resp.responseJSON.error).removeClass("error--hidden");
+            recordingsList.removeChild(recordingsList.firstChild);
+            recordButton.disabled = false;
         }
     });
   e.preventDefault();

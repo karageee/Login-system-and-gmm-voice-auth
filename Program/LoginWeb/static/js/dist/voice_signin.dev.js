@@ -12,9 +12,12 @@ var input; //MediaStreamAudioSourceNode we'll be recording
 var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext; //audio context to help us record
 
-var recordButton = document.getElementById("recordButton"); //add events to those 2 buttons
+var recordButton = document.getElementById("recordButton");
+var resetButton = document.getElementById("resetButton");
+var data = new FormData(); //add events to those 2 buttons
 
 recordButton.addEventListener("click", startRecording);
+resetButton.addEventListener("click", reset);
 var filename = 0;
 
 function startRecording() {
@@ -87,13 +90,28 @@ function stopRecording() {
   rec.exportWAV(createDownloadLink);
 }
 
+function reset() {
+  console.log("Reset button clicked");
+
+  while (recordingsList.hasChildNodes()) {
+    recordingsList.removeChild(recordingsList.firstChild);
+  }
+
+  filename = 0;
+}
+
 function createDownloadLink(blob) {
   var url = URL.createObjectURL(blob);
   var au = document.createElement('audio');
   var li = document.createElement('li');
-  var link = document.createElement('a'); //name of .wav file to use during upload and download (without extendion)
+  var link = document.createElement('a'); //name of .wav file to use during upload and download (without extension)
 
-  filename = filename + 1; //add controls to the <audio> element
+  filename = filename + 1;
+
+  if (filename == 3) {
+    recordButton.disabled = true;
+  } //add controls to the <audio> element
+
 
   au.controls = true;
   au.src = url; //save to disk link
@@ -105,28 +123,34 @@ function createDownloadLink(blob) {
 
   li.appendChild(au); //add the filename to the li
 
-  li.appendChild(document.createTextNode(filename + ".wav ")); //add the save to disk link to li
+  li.appendChild(document.createTextNode(filename + ".wav "));
+  data.append("voice", blob, filename + ".wav"); //add the save to disk link to li
 
-  li.appendChild(link); //upload
-
-  $('form[name=voice_signup').submit(function (e) {
-    var data = new FormData();
-    data.append("voice", blob, filename + ".wav");
-    $.ajax({
-      url: '/user/voice_signin',
-      type: 'POST',
-      data: data,
-      processData: false,
-      contentType: false,
-      error: function error(resp) {
-        $error.text(resp.responseJSON.error).removeClass("error--hidden");
-      }
-    });
-    e.preventDefault();
-  });
+  li.appendChild(link);
   li.appendChild(document.createTextNode(" ")); //add a space in between
   // li.appendChild(upload)//add the upload link to li
   //add the li element to the ol
 
   recordingsList.appendChild(li);
-}
+  recordButton.disabled = true;
+} //upload
+
+
+$('form[name=voice_signup').submit(function (e) {
+  $.ajax({
+    url: '/user/voice_signin',
+    type: 'POST',
+    data: data,
+    processData: false,
+    contentType: false,
+    success: function success(resp) {
+      window.location.href = "/dashboard/";
+    },
+    error: function error(resp) {
+      $error.text(resp.responseJSON.error).removeClass("error--hidden");
+      recordingsList.removeChild(recordingsList.firstChild);
+      recordButton.disabled = false;
+    }
+  });
+  e.preventDefault();
+});
