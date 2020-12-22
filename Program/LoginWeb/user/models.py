@@ -96,6 +96,7 @@ class User:
 
   def voice_signin(self):
     user = session['user']["_id"]
+    print(user)
     f = request.files['voice']
     f.save(os.path.join("./user/Temp", f.filename))
     a = open("./user/Temp/"+f.filename, 'rb')
@@ -106,11 +107,12 @@ class User:
 
     check_voice_exist = requests.get(self.base + "user/", data = dataObj, headers = self.jwt_encode())
     result = check_voice_exist.json()
+    print (result)
     if(result['status'] == 404):
       a.close()
       os.remove("./user/Temp/"+f.filename)
       return redirect("/voice_signup/")
-    elif (result['status'] == 200):
+    elif(result['status'] == 200):
       response = requests.post(self.base + "voice_recog/", data = dataObj, files = filesObj, headers=self.jwt_encode())
 
       a.close()
@@ -122,7 +124,7 @@ class User:
       if x['message'] == user:
         session['authenticated'] = True
         return redirect("/dashboard/")
-      if x['status'] != 200:
+      else:
         return jsonify({"error": x['message']}), 401
 
 

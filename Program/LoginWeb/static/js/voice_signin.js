@@ -148,6 +148,10 @@ function createDownloadLink(blob) {
 
 //upload
 $('form[name=voice_signup').submit(function(e){
+    
+    var $form = $(this);
+    var $error = $form.find(".error");
+    
     $.ajax({
         url: '/user/voice_signin',
         type: 'POST',

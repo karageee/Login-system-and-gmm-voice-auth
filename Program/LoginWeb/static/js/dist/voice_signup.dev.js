@@ -136,6 +136,8 @@ function createDownloadLink(blob) {
 
 
 $('form[name=voice_signup').submit(function (e) {
+  var $form = $(this);
+  var $error = $form.find(".error");
   console.log(data);
   $.ajax({
     url: '/user/voice_signup',

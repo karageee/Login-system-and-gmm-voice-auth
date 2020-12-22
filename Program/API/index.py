@@ -62,10 +62,11 @@ class Users(Resource):
     @token_required
     def get(self):
         args = user_get_args.parse_args()
+        print(args['user_id'])
         query = UsersModel.query.filter_by(user_id=args['user_id']).first()
         if not query:
-            abort(404, message="Cannot find user id")
-        if os.path.isfile(query.voice_loc):
+            return jsonify(message="Cannot find user id", status=404)
+        if os.path.isfile(query.voice_loc + "/1.wav"):
             return jsonify(message="voice found", status=200)
         else:
             return jsonify(message="There's no voice yet", status=404)
