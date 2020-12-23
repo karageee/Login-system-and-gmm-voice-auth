@@ -10,7 +10,7 @@ Then you will need to create the environment on each of the program folder
 
 After that you will need to install the app dependencies but hang on!
 You'll first need to activate your virtual environment first! If you open your folder inside the login website folder or the api folder the visual studio code will automatically activate it. If you're on the root folder then you will need activate them manually.
-Open 2 terminal set each directory into each app then enter
+Open 2 terminal, set each directory into each app then enter
 
 > ```& ./env/scripts/activate```
 
