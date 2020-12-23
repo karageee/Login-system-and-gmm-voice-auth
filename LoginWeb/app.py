@@ -54,4 +54,4 @@ def voice_signin():
   return render_template('voice_signin.html')
 
 if __name__ == '__main__':
-  app.run(port=5000, debug=True)
+  app.run(host='localhost', port=5000, debug=True, ssl_context='adhoc')
