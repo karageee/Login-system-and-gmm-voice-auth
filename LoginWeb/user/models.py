@@ -51,6 +51,7 @@ class User:
       }
       response = requests.post(self.base + "user/", data = user_id, headers=self.jwt_encode())
       return response.json()
+      # return jsonify({"success":"Login Success"}), 200
 
     return jsonify({ "error": "Signup failed" }), 400
   
@@ -70,6 +71,7 @@ class User:
     return jsonify({ "error": "Invalid login credentials" }), 401
 
   def voice_signup(self):
+    session['authenticated'] = False
     user = session['user']["_id"]
     for i in range(3):
       f = request.files[('voice'+str(i+1))]
@@ -88,6 +90,7 @@ class User:
       os.remove("./user/Temp/" + f.filename)
 
       x = response.json()
+      print(x["message"])
       if (x["category"] == "success") and (f.filename == "3.wav"):
         session['authenticated'] = True
         return redirect("/dashboard/")
@@ -95,6 +98,7 @@ class User:
         return jsonify({"error": x["message"]}), 401
 
   def voice_signin(self):
+    session['authenticated'] = False
     user = session['user']["_id"]
     print(user)
     f = request.files['voice']
@@ -111,7 +115,7 @@ class User:
     if(result['status'] == 404):
       a.close()
       os.remove("./user/Temp/"+f.filename)
-      return redirect("/voice_signup/")
+      return jsonify({"error":result['message']})
     elif(result['status'] == 200):
       response = requests.post(self.base + "voice_recog/", data = dataObj, files = filesObj, headers=self.jwt_encode())
 

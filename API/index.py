@@ -44,17 +44,15 @@ def token_required(f):
             token = request.headers['x-access-token']
         # return 401 if token is not passed 
         if not token: 
-            return jsonify({'message' : 'Token is missing !!'}), 401
+            return jsonify(message='Token is missing !!', status=401)
         try: 
             # decoding the payload to fetch the stored details 
             data = jwt.decode(token, app.config['SECRET_KEY'])
             if data['app_id'] != 'e91e518a-4400-4a33-8f36-eb9e5ccdb096':
-                return jsonify({'message' : 'Invalid credentials'}), 401
+                return jsonify(message = 'Invalid credentials', status=401)
             print(data)
         except: 
-            return jsonify({ 
-                'message' : 'Token is invalid !!'
-            }), 401
+            return jsonify(message = 'Token is invalid !!', status=401)
         return f(*args, **kwargs)
     return decorator
 
@@ -77,7 +75,7 @@ class Users(Resource):
         args = user_post_args.parse_args()
         response = UsersModel.query.filter_by(user_id=args['user_id']).first()
         if response:
-            abort(message="User id taken...", status=409)
+            abort (409, message="User id taken...")
 
         path = os.path.join(parent_dir, args['user_id'])
         os.mkdir(path)
@@ -85,7 +83,6 @@ class Users(Resource):
         user = UsersModel(auth_id=i, user_id=args['user_id'], voice_loc=path)
         db.session.add(user)
         db.session.commit()
-
         return jsonify(message="user created", status=201)
 
 class Voice_add(Resource):
@@ -96,7 +93,7 @@ class Voice_add(Resource):
             return 'no voice found'  
         file = request.files['voice']
         if file.filename == '':
-            abort (message="No file selected for uploading", status=400)
+            abort (400, message="No file selected for uploading")
         
         file.save(os.path.join(path, file.filename))
         if file.filename == "3.wav":
@@ -112,7 +109,7 @@ class Voice_recog(Resource):
             return 'no voice found'  
         file = request.files['voice']
         if file.filename == '':
-            abort (message="No file selected for uploading", status=400)
+            abort (400, message="No file selected for uploading")
         file.save(os.path.join(path, file.filename))
         msg = voices.recognize(request.form['user_id'], (os.path.join(path, file.filename)))
         print (msg)

@@ -159,9 +159,16 @@ $('form[name=voice_signup').submit(function(e){
         processData: false,
         contentType: false,
         success: function(resp){
-            window.location.href = "/dashboard/";
+            console.log(resp);
+            if (resp.error == "There's no voice yet"){
+                window.location.href = "/voice_signup/";
+            }
+            else{
+                window.location.href = "/dashboard/";
+            }
         },
         error: function(resp){
+            console.log(resp);
             $error.text(resp.responseJSON.error).removeClass("error--hidden");
             recordingsList.removeChild(recordingsList.firstChild);
             recordButton.disabled = false;
