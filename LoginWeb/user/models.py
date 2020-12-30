@@ -60,7 +60,7 @@ class User:
     return redirect('/')
   
   def login(self):
-
+    print(request.form.get('email'))
     user = db.Users.find_one({
       "email": request.form.get('email')
     })

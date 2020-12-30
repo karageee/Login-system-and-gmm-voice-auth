@@ -103,6 +103,7 @@ function reset(){
         recordingsList.removeChild(recordingsList.firstChild);
     }
     filename = 0;
+    recordButton.disabled = false;
 }
 
 function createDownloadLink(blob) {
@@ -114,9 +115,6 @@ function createDownloadLink(blob) {
 
     //name of .wav file to use during upload and download (without extension)
     filename = filename+1;
-    if(filename == 3){
-        recordButton.disabled = true;
-    }
 
     //add controls to the <audio> element
     au.controls = true;

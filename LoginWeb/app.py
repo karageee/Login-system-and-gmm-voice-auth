@@ -1,10 +1,8 @@
-from flask import Flask, render_template, session, redirect
+from flask import Flask, render_template, session, redirect, request, render_template_string
 from functools import wraps
-from flask_cors import CORS
 import pymongo
 
 app = Flask(__name__)
-CORS(app)
 app.secret_key = 'e91e518a-4400-4a33-8f36-eb9e5ccdb096'
 
 # Database
@@ -32,6 +30,17 @@ def Authentication_required(f):
 
 # Routes
 from user import routes
+
+@app.errorhandler(404)
+def page_not_found(e):
+  template = '''
+  <div class="center-content error">
+  <h1>Oops! That page doesn't exist.</h1>
+  <h3>%s</h3>
+  </div>
+  ''' % (request.url)
+
+  return render_template_string(template), 404
 
 @app.route('/')
 def home():

@@ -98,6 +98,7 @@ function reset() {
   }
 
   filename = 0;
+  recordButton.disabled = false;
 }
 
 function createDownloadLink(blob) {
@@ -106,12 +107,7 @@ function createDownloadLink(blob) {
   var li = document.createElement('li');
   var link = document.createElement('a'); //name of .wav file to use during upload and download (without extension)
 
-  filename = filename + 1;
-
-  if (filename == 3) {
-    recordButton.disabled = true;
-  } //add controls to the <audio> element
-
+  filename = filename + 1; //add controls to the <audio> element
 
   au.controls = true;
   au.src = url; //save to disk link
@@ -146,9 +142,16 @@ $('form[name=voice_signup').submit(function (e) {
     processData: false,
     contentType: false,
     success: function success(resp) {
-      window.location.href = "/dashboard/";
+      console.log(resp);
+
+      if (resp.error == "There's no voice yet") {
+        window.location.href = "/voice_signup/";
+      } else {
+        window.location.href = "/dashboard/";
+      }
     },
     error: function error(resp) {
+      console.log(resp);
       $error.text(resp.responseJSON.error).removeClass("error--hidden");
       recordingsList.removeChild(recordingsList.firstChild);
       recordButton.disabled = false;

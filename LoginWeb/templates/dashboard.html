@@ -15,15 +15,12 @@
     </div>
 
     <div class="card">
-
+      {% autoescape false%}
       <h2 class="center">Your Info</h2>
-
-      <p>
-        <strong>ID:</strong> {{ session['user']['_id'] }}<br>
-        <strong>Name:</strong> {{ session['user']['name'] }}<br>
-        <strong>Email:</strong> {{ session['user']['email'] }}
-      </p>
-    
+        <p><strong>ID:</strong> {{ session['user']['_id'] }}</p>
+        <p><strong>Name:</strong> {{ session['user']['name'] }}</p>
+        <p><strong>Email:</strong> {{ session['user']['email'] }}</p>
+      {%endautoescape%}
     </div>
   
   </div>
