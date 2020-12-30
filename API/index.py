@@ -57,7 +57,6 @@ def token_required(f):
     return decorator
 
 class Users(Resource):
-    @token_required
     def get(self):
         args = user_get_args.parse_args()
         print(args['user_id'])

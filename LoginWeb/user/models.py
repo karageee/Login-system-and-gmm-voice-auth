@@ -73,6 +73,7 @@ class User:
   def voice_signup(self):
     session['authenticated'] = False
     user = session['user']["_id"]
+    print(type(user))
     for i in range(3):
       f = request.files[('voice'+str(i+1))]
       f.save(os.path.join("./user/Temp", f.filename))
