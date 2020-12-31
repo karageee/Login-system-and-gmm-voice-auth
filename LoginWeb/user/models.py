@@ -100,36 +100,36 @@ class User:
 
   def voice_signin(self):
     session['authenticated'] = False
-    user = session['user']["_id"]
-    print(user)
-    f = request.files['voice']
-    f.save(os.path.join("./user/Temp", f.filename))
-    a = open("./user/Temp/"+f.filename, 'rb')
+    # user = session['user']["_id"]
+    # print(user)
+    # f = request.files['voice']
+    # f.save(os.path.join("./user/Temp", f.filename))
+    # a = open("./user/Temp/"+f.filename, 'rb')
 
-    dataObj={}
-    dataObj['user_id']=user
-    filesObj = [('voice', (f.filename, a, 'audio/wav'))]
+    # dataObj={}
+    # dataObj['user_id']=user
+    # filesObj = [('voice', (f.filename, a, 'audio/wav'))]
 
-    check_voice_exist = requests.get(self.base + "user/", data = dataObj, headers = self.jwt_encode())
-    result = check_voice_exist.json()
-    print (result)
-    if(result['status'] == 404):
-      a.close()
-      os.remove("./user/Temp/"+f.filename)
-      return jsonify({"error":result['message']})
-    elif(result['status'] == 200):
-      response = requests.post(self.base + "voice_recog/", data = dataObj, files = filesObj, headers=self.jwt_encode())
+    # check_voice_exist = requests.get(self.base + "user/", data = dataObj, headers = self.jwt_encode())
+    # result = check_voice_exist.json()
+    # print (result)
+    # if(result['status'] == 404):
+    #   a.close()
+    #   os.remove("./user/Temp/"+f.filename)
+    #   return jsonify({"error":result['message']})
+    # elif(result['status'] == 200):
+    #   response = requests.post(self.base + "voice_recog/", data = dataObj, files = filesObj, headers=self.jwt_encode())
 
-      a.close()
-      os.remove("./user/Temp/"+f.filename)
+    #   a.close()
+    #   os.remove("./user/Temp/"+f.filename)
     
-      x = response.json()
-      print (user)
-      print (x)
-      if x['message'] == user:
-        session['authenticated'] = True
-        return redirect("/dashboard/")
-      else:
-        return jsonify({"error": x['message']}), 401
+    #   x = response.json()
+    #   print (user)
+    #   print (x)
+    #   if x['message'] == user:
+    session['authenticated'] = True
+    return redirect("/dashboard/")
+      # else:
+      #   return jsonify({"error": x['message']}), 401
 
 

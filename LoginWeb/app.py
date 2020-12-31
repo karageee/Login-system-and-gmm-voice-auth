@@ -44,23 +44,23 @@ def page_not_found(e):
 
 @app.route('/')
 def home():
-  return render_template('home.html')
+  return render_template('home.jinja2')
 
 @app.route('/dashboard/')
 @login_required
 @Authentication_required
 def dashboard():
-  return render_template('dashboard.html')
+  return render_template('dashboard.jinja2')
 
 @app.route('/voice_signup/')
 @login_required
 def voice_signup():
-  return render_template('voice_signup.html')
+  return render_template('voice_signup.jinja2')
 
 @app.route('/voice_signin/')
 @login_required
 def voice_signin():
-  return render_template('voice_signin.html')
+  return render_template('voice_signin.jinja2')
 
 if __name__ == '__main__':
   app.run(host='localhost', port=5000, debug=True)
