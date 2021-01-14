@@ -6,6 +6,7 @@ from app import voices
 from functools import wraps
 import os
 import jwt
+import random
 
 app = Flask("__name__")
 CORS(app)
@@ -110,8 +111,10 @@ class Voice_recog(Resource):
         file = request.files['voice']
         if file.filename == '':
             abort (400, message="No file selected for uploading")
-        file.save(os.path.join(path, file.filename))
         msg = voices.recognize(request.form['user_id'], (os.path.join(path, file.filename)))
+        if msg == True:
+            file.save(os.path.join(path, (str(random.randint(1,3)))+".wav"))
+            voices.add_user(request.form['user_id'])
         print (msg)
         return jsonify(message= msg, category="success", status=200)
 

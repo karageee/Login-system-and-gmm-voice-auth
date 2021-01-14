@@ -31,7 +31,7 @@ def calculate_delta(array):
 #convert audio to mfcc features
 def extract_features(audio,rate):    
     mfcc_feat = mfcc.mfcc(audio, rate, 0.025, 0.01,20,appendEnergy = True, nfft=1200)
-    mfcc_feat = preprocessing.scale(mfcc_feat)
+    mfcc_feat = preprocessing.scale(mfcc_feat) #Standarization Gaussian with zero mean and unit variance.
     delta = calculate_delta(mfcc_feat)
 
     #combining both mfcc features and delta
@@ -103,6 +103,7 @@ def recognize(user_id, voice):
         scores = np.array(gmm.score(vector))
         log_likelihood[i] = scores.sum()
         print (scores)
+        print (models[i])
 
     pred = np.argmax(log_likelihood)
     identity = speakers[pred]
@@ -117,4 +118,4 @@ def recognize(user_id, voice):
     if identity != ("gmm_models\\" + user_id):
         return ("Unknown voice!")
 
-    return (user_id)
+    return (True)
