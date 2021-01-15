@@ -113,7 +113,12 @@ class Voice_recog(Resource):
             abort (400, message="No file selected for uploading")
         msg = voices.recognize(request.form['user_id'], (os.path.join(path, file.filename)))
         if msg == True:
-            file.save(os.path.join(path, (str(random.randint(1,3)))+".wav"))
+            query = UsersModel.query.filter_by(user_id=request.form['user_id']).first()
+            for i in os.listdir(query.voice_loc):
+                number = int(i.split(".wav")[0])
+            file.save(os.path.join(path, (str(number + 1))+".wav"))
+            if((number+1)%3 == 0):
+                voices.add_user(request.form['user_id'])
             voices.add_user(request.form['user_id'])
         print (msg)
         return jsonify(message= msg, category="success", status=200)
