@@ -6,7 +6,6 @@ from app import voices
 from functools import wraps
 import os
 import jwt
-import random
 
 app = Flask("__name__")
 CORS(app)
@@ -15,6 +14,7 @@ app.config['SECRET_KEY'] = '144cc764-0878-4484-9a36-ada1128fb3ae'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user/database.db'
 db = SQLAlchemy(app)
 parent_dir = "./app/voice_database"
+voice_temp_dir = "./app/voice_database/Temp"
 
 class UsersModel(db.Model):
     auth_id = db.Column(db.String(100), primary_key=True)
@@ -111,16 +111,22 @@ class Voice_recog(Resource):
         file = request.files['voice']
         if file.filename == '':
             abort (400, message="No file selected for uploading")
-        msg = voices.recognize(request.form['user_id'], (os.path.join(path, file.filename)))
+        file.save(os.path.join(voice_temp_dir, file.filename))
+        msg = voices.recognize(request.form['user_id'], (os.path.join(voice_temp_dir, file.filename)))
+        print((os.path.join(voice_temp_dir, file.filename)))
         if msg == True:
             query = UsersModel.query.filter_by(user_id=request.form['user_id']).first()
             for i in os.listdir(query.voice_loc):
                 number = int(i.split(".wav")[0])
-            file.save(os.path.join(path, (str(number + 1))+".wav"))
+            os.rename(voice_temp_dir+ "/" +file.filename, path+ "/" +str(number+1)+".wav")
             if((number+1)%3 == 0):
                 voices.add_user(request.form['user_id'])
-            voices.add_user(request.form['user_id'])
         print (msg)
+        if len(os.listdir(voice_temp_dir)) == 0:
+            print("Directory is empty")
+        else:    
+            print("Directory is not empty, Purging")
+            os.remove(os.path.join(voice_temp_dir, file.filename))
         return jsonify(message= msg, category="success", status=200)
 
 api.add_resource(Users, "/user/")

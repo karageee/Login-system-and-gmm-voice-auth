@@ -31,11 +31,15 @@ def calculate_delta(array):
 #convert audio to mfcc features
 def extract_features(audio,rate):    
     mfcc_feat = mfcc.mfcc(audio, rate, 0.025, 0.01,20,appendEnergy = True, nfft=1200)
+    print("raw audio" + str(mfcc_feat))
     mfcc_feat = preprocessing.scale(mfcc_feat) #Standarization Gaussian with zero mean and unit variance.
+    print("preprocessed" + str(mfcc_feat))
     delta = calculate_delta(mfcc_feat)
+    print("Delta audio" + str(delta))
 
     #combining both mfcc features and delta
     combined = np.hstack((mfcc_feat,delta)) 
+    print("Combined" + str(combined))
     return combined
 
 def add_user(user_id):
@@ -65,9 +69,9 @@ def add_user(user_id):
             
         # when features of 3 files of speaker are exist and concatenated, then do model training
         if count == 3:    
-            gmm = GaussianMixture(n_components = 16, max_iter = 500, covariance_type='diag',n_init = 3)
+            gmm = GaussianMixture(n_components = 16, max_iter = 1000, covariance_type='diag',n_init = 3)
             gmm.fit(features)
-
+            
             # saving the trained gaussian model
             pickle.dump(gmm, open(dest + name + '.gmm', 'wb'))
             print(name + ' added successfully') 
@@ -109,13 +113,9 @@ def recognize(user_id, voice):
     identity = speakers[pred]
     print(pred)
     print(identity)
-  
-    # if voice not recognized than terminate the process
-    if identity == 'unknown':
-        return ("Not Recognized! Try again...")
 
     # if voice is not the same then return unknown
     if identity != ("gmm_models\\" + user_id):
-        return ("Unknown voice!")
+        return ("Voice not Recognized! Try Again...")
 
     return (True)

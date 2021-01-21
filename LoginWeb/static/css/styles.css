@@ -193,6 +193,9 @@ p {
   border-width: 2px;
   border-radius: 15px;
 }
+.resetButton {
+  background-color: white;
+}
 
 /* Cards */
 .card-wrapper {

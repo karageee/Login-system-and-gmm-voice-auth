@@ -1,51 +1,48 @@
-True
-True
-True
-True
-True
-True
-True
-True
-Unknown voice!
-Unknown voice!
-Unknown voice!
-Unknown voice!
-Unknown voice!
-True
-Unknown voice!
-True
-True
-True
-True
-True
-True
-True
-True
-Unknown voice!
-Unknown voice!
-True
-Unknown voice!
-True
-True
-True
-True
-Unknown voice!
-Unknown voice!
-True
-True
-True
-True
-True
-True
-True
-True
-True
-True
-True
-True
-True
-True
-Unknown voice!
-True
-True
-True
+True (Audie_Milson)
+True (Audie_Milson)
+True (Audie_Milson)
+True (Audie_Milson)
+True (Edrico_Alroy_Dipawinata)
+True (Edrico_Alroy_Dipawinata)
+True (Edrico_Alroy_Dipawinata)
+True (Edrico_Alroy_Dipawinata)
+Voice not Recognized! Try Again... (James_Anderson)
+Voice not Recognized! Try Again... (James_Anderson)
+True (James_Anderson)
+Voice not Recognized! Try Again... (James_Anderson)
+True (Jeslyne)
+True (Jeslyne)
+True (Jeslyne)
+True (Jeslyne)
+Voice not Recognized! Try Again... (Johnny_Andersen)
+True (Johnny_Andersen)
+True (Johnny_Andersen)
+True (Johnny_Andersen)
+Voice not Recognized! Try Again... (Kenny_Dwicahya)
+Voice not Recognized! Try Again... (Kenny_Dwicahya)
+True (Kenny_Dwicahya)
+Voice not Recognized! Try Again... (Kenny_Dwicahya)
+True (Marcelino_Fernandez)
+True (Marcelino_Fernandez)
+True (Marcelino_Fernandez)
+True (Marcelino_Fernandez)
+Voice not Recognized! Try Again... (Michael_Yan_Petra)
+Voice not Recognized! Try Again... (Michael_Yan_Petra)
+True (Michael_Yan_Petra)
+True (Michael_Yan_Petra)
+True (Reynard_Stephensen)
+True (Reynard_Stephensen)
+True (Reynard_Stephensen)
+True (Reynard_Stephensen)
+True (Teddy_Marcello)
+True (Teddy_Marcello)
+True (Teddy_Marcello)
+True (Teddy_Marcello)
+True (Yoshino_Dayu)
+True (Yoshino_Dayu)
+True (Yoshino_Dayu)
+True (Yoshino_Dayu)
+Voice not Recognized! Try Again... (Yosia_Nathanael_Setiady)
+True (Yosia_Nathanael_Setiady)
+True (Yosia_Nathanael_Setiady)
+True (Yosia_Nathanael_Setiady)

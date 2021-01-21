@@ -99,6 +99,7 @@ function reset() {
 
   filename = 0;
   recordButton.disabled = false;
+  data = new FormData();
 }
 
 function createDownloadLink(blob) {
@@ -153,8 +154,7 @@ $('form[name=voice_signup').submit(function (e) {
     error: function error(resp) {
       console.log(resp);
       $error.text(resp.responseJSON.error).removeClass("error--hidden");
-      recordingsList.removeChild(recordingsList.firstChild);
-      recordButton.disabled = false;
+      reset();
     }
   });
   e.preventDefault();
