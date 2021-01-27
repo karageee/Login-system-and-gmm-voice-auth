@@ -31,24 +31,20 @@ def calculate_delta(array):
 #convert audio to mfcc features
 def extract_features(audio,rate):    
     mfcc_feat = mfcc.mfcc(audio, rate, 0.025, 0.01,20,appendEnergy = True, nfft=1200)
-    print("raw audio" + str(mfcc_feat))
     mfcc_feat = preprocessing.scale(mfcc_feat) #Standarization Gaussian with zero mean and unit variance.
-    print("preprocessed" + str(mfcc_feat))
     delta = calculate_delta(mfcc_feat)
-    print("Delta audio" + str(delta))
 
     #combining both mfcc features and delta
-    combined = np.hstack((mfcc_feat,delta)) 
-    print("Combined" + str(combined))
+    combined = np.hstack((mfcc_feat,delta))
     return combined
 
 def add_user(user_id):
     
     name = user_id
     
-    source = "./API/app/voice_database/" + name
+    source = "./app/voice_database/" + name
 
-    dest =  "./API/app/gmm_models/"
+    dest =  "./app/gmm_models/"
     count = 1
 
     for path in os.listdir(source):
@@ -74,7 +70,6 @@ def add_user(user_id):
             
             # saving the trained gaussian model
             pickle.dump(gmm, open(dest + name + '.gmm', 'wb'))
-            print(name + ' added successfully') 
             
             features = np.asfarray(())
             count = 0
@@ -85,10 +80,9 @@ def add_user(user_id):
 def recognize(user_id, voice):
     audio = voice
 
-    modelpath = "./API/app/gmm_models"
+    modelpath = "./app/gmm_models"
 
     gmm_files = [os.path.join(modelpath, fname) for fname in os.listdir(modelpath) if fname.endswith('.gmm')]
-    print (gmm_files)
 
     models    = [pickle.load(open(fname,'rb')) for fname in gmm_files]
 
@@ -106,13 +100,9 @@ def recognize(user_id, voice):
         gmm = models[i]         
         scores = np.array(gmm.score(vector))
         log_likelihood[i] = scores.sum()
-        print (scores)
-        print (models[i])
 
     pred = np.argmax(log_likelihood)
     identity = speakers[pred]
-    print(pred)
-    print(identity)
 
     # if voice is not the same then return unknown
     if identity != ("gmm_models\\" + user_id):
